@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { lerp } from "three/src/math/MathUtils";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
+import { Edges } from "@react-three/drei";
 
 const SelectionBoxes = ({ data }) => {
   const [selectedBox, setSelectedBox] = useState(null);
@@ -26,7 +27,7 @@ const SelectionBoxes = ({ data }) => {
       box.rigidbody?.setEnabled(true);
       if (selectedBox === index) return;
 
-      box.applyImpulse({ x: 0, y: -5, z: -20 }, true);
+      box.applyImpulse({ x: 0, y: 0, z: -20 }, true);
     });
   }, [selectedBox]);
 
@@ -45,9 +46,9 @@ const SelectionBoxes = ({ data }) => {
     });
 
     boxesBodies.current[selectedBox].setNextKinematicTranslation({
-      x: lerp(boxesBodies.current[selectedBox].translation().x, 0, 0.1),
-      y: lerp(boxesBodies.current[selectedBox].translation().y, 1, 0.1),
-      z: lerp(boxesBodies.current[selectedBox].translation().z, -2, 0.1),
+      x: lerp(boxesBodies.current[selectedBox].translation().x, 0, 0.05),
+      y: lerp(boxesBodies.current[selectedBox].translation().y, 1, 0.05),
+      z: lerp(boxesBodies.current[selectedBox].translation().z, -2, 0.05),
     });
 
     if (hideSelectedBox) {
@@ -78,6 +79,9 @@ const SelectionBoxes = ({ data }) => {
               <meshStandardMaterial attach='material-3' transparent opacity={1} roughness='0.1' color={"red"} />
               <meshStandardMaterial attach='material-4' transparent opacity={1} roughness='0.1' color={"green"} />
               <meshStandardMaterial attach='material-5' transparent opacity={1} roughness='0.1' color={"red"} />
+              <Edges>
+                <meshBasicMaterial transparent opacity={selectedBox !== null && selectedBox === index ? "0" : "1"} />
+              </Edges>
             </mesh>
           </RigidBody>
         );

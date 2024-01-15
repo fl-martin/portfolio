@@ -6,15 +6,15 @@ const PhysicFloor = ({ reflector, position }) => {
   return (
     <>
       {reflector ? (
-        <RigidBody type='kinematicPosition'>
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={position} scale={ratioScale}>
+        <RigidBody type='kinematicPosition' position={position}>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} scale={ratioScale}>
             <planeGeometry args={[50, 50]} />
             <MeshReflectorMaterial
               blur={[300, 100]}
               resolution={1048}
               mixBlur={1}
               mixStrength={80}
-              roughness={0.8}
+              roughness={0.35}
               depthScale={1.2}
               minDepthThreshold={1}
               maxDepthThreshold={1.4}
@@ -24,7 +24,7 @@ const PhysicFloor = ({ reflector, position }) => {
           </mesh>
         </RigidBody>
       ) : (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]} receiveShadow scale={ratioScale}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={position} receiveShadow scale={ratioScale}>
           <planeGeometry args={[1000, 1000]} />
           <shadowMaterial transparent opacity={0.4} />
         </mesh>

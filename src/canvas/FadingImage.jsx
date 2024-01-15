@@ -56,7 +56,7 @@ function FadingImage() {
 
   return (
     <mesh onPointerOver={e => setHover(true)} onPointerOut={e => setHover(false)} position={[0, 0, -11]}>
-      <planeGeometry args={[3, 4]} />
+      <planeGeometry args={[6, 8]} />
 
       <ThreeCustomShaderMaterial
         ref={materialRef}
@@ -65,7 +65,6 @@ function FadingImage() {
           /* glsl */ ` varying vec2 vUv;
         void main() {
           vUv = uv;
-          csm_Position = position * vec3(2.0);
         }`
         }
         fragmentShader={frag}

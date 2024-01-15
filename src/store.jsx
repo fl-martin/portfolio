@@ -1,20 +1,30 @@
 import { create } from "zustand";
-import { screensData } from "./data/screensData";
 
 const useAppStore = create((set, get) => ({
-  currentScreen: "menu",
+  currentScreen: "welcome",
   setScreen: screen => set(state => ({ currentScreen: screen })),
   currentExperience: null,
-  setBacktoMenu: () => set(state => ({ currentExperience: null, currentScreen: "menu", currentCameraPosition: "menu" })),
   setExperience: experience => set(state => ({ currentExperience: experience, currentScreen: "experience" })),
-  getCurrentExperienceData: () =>
-    screensData.find(screen => {
-      return screen.name === get().currentExperience;
-    }),
-  currentCameraPosition: "menu",
+  setBacktoMenu: () => set(state => ({ currentExperience: null, currentScreen: "menu" })), // que onda con estos current camera position forzados antes del rest?
+  setBacktoWelcome: () => set(state => ({ currentExperience: null, currentScreen: "welcome" })),
+  screensContainers: {},
+  addScreenContainer: (name, container) => set(state => ({ screensContainers: { ...state.screensContainers, [name]: container } })),
+  currentCameraPosition: "welcome",
   setCurrentCameraPosition: position => set(state => ({ currentCameraPosition: position })),
   currentCameraMode: "rig",
   setCurrentCameraMode: mode => set(state => ({ currentCameraMode: mode })),
+  createDOControls: null,
+  setCreateDOControls: func => set(state => ({ createDOControls: func })),
+  isMobile:
+    navigator.userAgent.match(/Android/i) ||
+    navigator.userAgent.match(/webOS/i) ||
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPod/i) ||
+    navigator.userAgent.match(/BlackBerry/i) ||
+    navigator.userAgent.match(/Windows Phone/i)
+      ? true
+      : false,
 }));
 
 export default useAppStore;

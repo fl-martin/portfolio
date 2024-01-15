@@ -14,4 +14,5 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  base: "https://fl-martin.github.io/r3f-test",
 });

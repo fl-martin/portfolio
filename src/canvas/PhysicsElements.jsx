@@ -9,7 +9,7 @@ const PhysicsElements = () => {
     <Suspense fallback='null'>
       <Physics>
         <SelectionBoxes data={boxesData}></SelectionBoxes>
-        <PhysicFloor reflector={true} position={[0, -5, 0]} />
+        <PhysicFloor reflector={true} position={[0, -3, 0]} />
       </Physics>
     </Suspense>
   );

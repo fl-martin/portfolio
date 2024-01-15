@@ -1,31 +1,44 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import ScreenContainer from "./canvas/ScreenContainer";
 import { Stats } from "@react-three/drei";
 import PostEffects from "./canvas/PostEffects";
 import Overlay from "./dom/Overlay";
 import MainScene from "./canvas/MainScene";
+import ScreensGroup from "./canvas/ScreensGroup";
+import LoadingScreen from "./dom/LoadingScreen";
+import useAppStore from "./store";
+import WelcomeScreen from "./canvas/WelcomeScreen";
+import ContactScreen from "./canvas/ContactScreen";
 
 const App = () => {
+  const screen = useAppStore(state => state.currentScreen);
+
+  const cameraPosition = useAppStore(state => state.currentCameraPosition);
+
   return (
     <>
-      <Canvas camera={{ fov: 70, position: [0, 0, 6] }} shadows style={{ background: "black" }}>
-        <MainScene />
-        <ScreenContainer experienceName={"rapierDemo"} />
-        <PostEffects />
-        <Stats showPanel={0} />
-      </Canvas>
+      <Suspense fallback={<LoadingScreen />}>
+        <Canvas camera={{ position: [0, 0, 6] }} shadows style={{ background: "black" }}>
+          {(screen === "welcome" || cameraPosition === "welcome") && <WelcomeScreen></WelcomeScreen>}
+          {(screen === "contact" || cameraPosition === "contact") && <ContactScreen></ContactScreen>}
+          <MainScene />
+          <ScreensGroup />
+          <PostEffects />
+        </Canvas>
+      </Suspense>
       <Overlay />
+      <Stats></Stats>
     </>
   );
 };
 
 export default App;
 
+// main screen ratio
+// posicion dinamica de screens
 //cambiar env por solo fondo
 // llevar a su archivo ImageFadeMaterial
-// bug rapier, es correcto aplyy impulses asi?
-// pantalla menu: fog,  water
+// bug rapier, es correcto translation asi?
 // WaveMaterial / WaterShader https://codesandbox.io/s/f5wkx2
 // mejorar soft shadows , randomlights?
 // AREAS: experiencias visuales / con audio / audio posicional . estaticas / interactivas(click drag, push, shooter, shaderspointer position) . mobil / desktop

@@ -1,5 +1,4 @@
-import FadingImage from "./FadingImage";
-import PhysicsElements from "./PhysicsElements";
+import HoverElements from "./HoverElements";
 import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 
 const Experience = () => {
@@ -10,8 +9,7 @@ const Experience = () => {
       <Environment files={"./assets/hdri/meadow_2k.hdr"} background></Environment>
       <ambientLight />
       <directionalLight castShadow position={[0, 7, 6]} intensity={1} shadow-mapSize={1024}></directionalLight>
-      <FadingImage></FadingImage>
-      <PhysicsElements></PhysicsElements>
+      <HoverElements />
     </>
   );
 };

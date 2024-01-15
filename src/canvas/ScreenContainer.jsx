@@ -1,30 +1,47 @@
 import { useThree } from "@react-three/fiber";
-import useAppStore from "../store";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ScreenOutline from "./ScreenOutline";
 import Screen from "./Screen";
+import ScreenPoster from "./ScreenPoster";
+import useAppStore from "../store";
 
-const ScreenContainer = ({ experienceName, position, outlineColor }) => {
+const ScreenContainer = ({ data, index, screensArrayLength }) => {
   const screen = useAppStore(state => state.currentScreen);
 
-  const viewport = useThree(state => state.viewport);
+  const cameraPosition = useAppStore(state => state.currentCameraPosition);
 
-  const [portalSize, setPortalSize] = useState(viewport);
+  const experience = useAppStore(state => state.currentExperience);
+
+  const size = useThree(state => state.size);
+
+  const [portalSize, setPortalSize] = useState({ width: size.width * 0.01, height: size.height * 0.01 });
+
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (screen === "menu") {
-      setPortalSize(viewport);
-      return;
+    if (cameraPosition !== "experience" || screen === "menu" || screen === "contact" || screen === "welcome") {
+      setVisible(true);
+    } else {
+      setVisible(false);
     }
-    setPortalSize({ width: viewport.width * 2, height: viewport.height * 2 });
-  }, [viewport]);
+  }, [cameraPosition, screen]);
+
+  useEffect(() => {
+    setPortalSize({ width: size.width * 0.01, height: size.height * 0.01 });
+  }, [size]);
+
+  const totalWidth = screensArrayLength * (portalSize.width + 2); // El 2 es el espacio horizontal entre los elementos
+  const centerX = -totalWidth / 2 + portalSize.width / 2; // Calcula la posición X del centro
 
   return (
-    <>
-      <ScreenOutline portalSize={portalSize}></ScreenOutline>
-      <Screen experienceName={experienceName} portalSize={portalSize} />
-    </>
+    <group position={[centerX + index * (portalSize.width + 2) + 1, data.position.y, data.position.z]}>
+      <ScreenOutline data={data} portalSize={portalSize} experienceName={data.name} visible={visible}></ScreenOutline>
+      <ScreenPoster data={data} portalSize={portalSize} visible={visible}></ScreenPoster>
+      {cameraPosition === "experience" && experience === data.name && <Screen data={data} portalSize={portalSize} />}
+    </group>
   );
 };
 
 export default ScreenContainer;
+
+// extraer screncontainers de poster

@@ -1,21 +1,13 @@
 import { RenderTexture } from "@react-three/drei";
-import useAppStore from "../store";
-import Experience from "./Experience";
 
-const Screen = ({ experienceName, portalSize }) => {
-  const experience = useAppStore(state => state.currentExperience);
-
+const Screen = ({ data, portalSize }) => {
   return (
-    <>
-      <mesh position={[0, 0, -9]} visible={experience === experienceName}>
-        <planeGeometry args={[portalSize.width, portalSize.height]} />
-        <meshStandardMaterial>
-          <RenderTexture attach='map'>
-            <Experience />
-          </RenderTexture>
-        </meshStandardMaterial>
-      </mesh>
-    </>
+    <mesh position={[0, 0, 0]}>
+      <planeGeometry args={[portalSize.width, portalSize.height]} />
+      <meshBasicMaterial>
+        <RenderTexture attach={"map"}>{data.experience}</RenderTexture>
+      </meshBasicMaterial>
+    </mesh>
   );
 };
 
