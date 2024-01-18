@@ -15,10 +15,32 @@ const App = () => {
 
   const cameraPosition = useAppStore(state => state.currentCameraPosition);
 
+  const cameraMode = useAppStore(state => state.currentCameraMode);
+
   return (
     <>
       <Suspense fallback={<LoadingScreen />}>
-        <Canvas camera={{ position: [0, 0, 6] }} shadows style={{ background: "black" }}>
+        <Canvas
+          camera={{ position: [0, 0, 6] }}
+          shadows
+          style={{ background: "black" }}
+          raycaster={
+            cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu"
+              ? {
+                  computeOffsets: (_, { size: { width, height } }) => {
+                    if (isLocked.current) {
+                      return {
+                        offsetX: width / 2,
+                        offsetY: height / 2,
+                      };
+                    } else {
+                      return null;
+                    }
+                  },
+                }
+              : null
+          }
+        >
           {(screen === "welcome" || cameraPosition === "welcome") && <WelcomeScreen></WelcomeScreen>}
           {(screen === "contact" || cameraPosition === "contact") && <ContactScreen></ContactScreen>}
           <MainScene />

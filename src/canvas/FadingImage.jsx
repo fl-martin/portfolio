@@ -1,9 +1,9 @@
+import { lerp } from "three/src/math/MathUtils";
+import { MeshStandardMaterial } from "three";
+import ThreeCustomShaderMaterial from "three-custom-shader-material";
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
-import { lerp } from "three/src/math/MathUtils";
-import ThreeCustomShaderMaterial from "three-custom-shader-material";
-import { MeshStandardMaterial } from "three";
 
 function FadingImage() {
   const ref = useRef();

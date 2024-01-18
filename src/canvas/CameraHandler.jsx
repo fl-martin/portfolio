@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import useAppStore from "../store";
 import { useFrame, useThree } from "@react-three/fiber";
 import { DeviceOrientationControls } from "../custom/controls/DeviceOrientationControls";
+import PointerLockCamera from "./PointerLockCamera";
 
 const CameraHandler = () => {
   const screen = useAppStore(state => state.currentScreen);
@@ -89,21 +90,24 @@ const CameraHandler = () => {
   });
 
   return (
-    <CameraControls
-      ref={cameraControls}
-      smoothTime={0.5}
-      restThreshold={restThreshold}
-      touches={{
-        one: 0,
-        two: 0,
-        three: 0,
-      }}
-      mouseButtons={{
-        left: 0,
-        middle: 0,
-        right: 0,
-      }}
-    ></CameraControls>
+    <>
+      <CameraControls
+        ref={cameraControls}
+        smoothTime={0.5}
+        restThreshold={restThreshold}
+        touches={{
+          one: 0,
+          two: 0,
+          three: 0,
+        }}
+        mouseButtons={{
+          left: 0,
+          middle: 0,
+          right: 0,
+        }}
+      ></CameraControls>
+      {cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu" && <PointerLockCamera></PointerLockCamera>}
+    </>
   );
 };
 

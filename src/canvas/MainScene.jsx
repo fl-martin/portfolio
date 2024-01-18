@@ -1,7 +1,7 @@
-import { Environment } from "@react-three/drei";
 import CameraHandler from "./CameraHandler";
-import useAppStore from "../store";
+import { Environment } from "@react-three/drei";
 import Ocean from "./Ocean";
+import useAppStore from "../store";
 
 const MainScene = () => {
   const screen = useAppStore(state => state.currentScreen);

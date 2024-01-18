@@ -25,7 +25,7 @@ function BottomNavbar() {
   }, [screen]);
 
   return (
-    <div className='overflow-x-auto fixed -bottom-3 left-1/2 -translate-x-1/2 rounded-t-lg z-50 h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 transition-colors duration-300'>
+    <div className='overflow-x-auto overflow-hidden fixed -bottom-3 left-1/2 -translate-x-1/2 rounded-t-lg z-50 h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 transition-colors duration-300'>
       <Tabs
         aria-label='Full width tabs'
         style='fullWidth'

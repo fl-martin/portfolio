@@ -10,7 +10,7 @@ export const screensData = [
     textureURL: "./assets/img/1.png",
     textureOnHoverURL: "./assets/img/2.png",
     outlineColor: "hotpink",
-    tagTitle: "Physics (Rapier)",
+    tagTitle: "Physics",
     experience: <Experience3 />,
   },
   {
@@ -28,7 +28,7 @@ export const screensData = [
     textureURL: "./assets/img/1.png",
     textureOnHoverURL: "./assets/img/2.png",
     outlineColor: "hotpink",
-    tagTitle: "Hover Effects (Custom Shader Material)",
+    tagTitle: "Pointer Effects",
     experience: <Experience />,
   },
   {
@@ -37,7 +37,7 @@ export const screensData = [
     textureURL: "./assets/img/1.png",
     textureOnHoverURL: "./assets/img/2.png",
     outlineColor: "hotpink",
-    tagTitle: "Character Controller (Ecctrl)",
+    tagTitle: "Character Controller",
     experience: <Box />,
   },
 ];
