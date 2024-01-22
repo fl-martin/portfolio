@@ -34,7 +34,7 @@ const ScreenContainer = ({ data, index, screensArrayLength }) => {
   const centerX = -totalWidth / 2 + portalSize.width / 2; // Calcula la posición X del centro
 
   return (
-    <group position={[centerX + index * (portalSize.width + 2) + 1, data.position.y, data.position.z]}>
+    <group position={[1.4 + centerX + index * (portalSize.width + 1) + 1, data.position.y, data.position.z]}>
       <ScreenOutline data={data} portalSize={portalSize} experienceName={data.name} visible={visible}></ScreenOutline>
       <ScreenPoster data={data} portalSize={portalSize} visible={visible}></ScreenPoster>
       {cameraPosition === "experience" && experience === data.name && <Screen data={data} portalSize={portalSize} />}

@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Stats } from "@react-three/drei";
 import PostEffects from "./canvas/PostEffects";
 import Overlay from "./dom/Overlay";
 import MainScene from "./canvas/MainScene";
@@ -49,7 +48,6 @@ const App = () => {
         </Canvas>
       </Suspense>
       <Overlay />
-      <Stats></Stats>
     </>
   );
 };

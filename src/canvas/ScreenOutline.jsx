@@ -20,10 +20,6 @@ const ScreenOutline = ({ portalSize, experienceName, visible, data }) => {
 
   const matRef = useRef();
 
-  const [springs, api] = useSpring(() => {
-    opacity: 0;
-  });
-
   useFrame(() => {
     matRef.current.color.lerp(hovered || currentExperience === experienceName ? colorTo : colorFrom, 0.1);
   });
@@ -34,31 +30,23 @@ const ScreenOutline = ({ portalSize, experienceName, visible, data }) => {
         position={[0, 0, -0.01]}
         visible={visible}
         scale={hovered || currentExperience === experienceName ? 1.04 : 1.02}
-        onClick={cameraPosition === "menu" ? () => setExperience(experienceName) : null}
+        //onClick={cameraPosition === "menu" ? () => setExperience(experienceName) : null}
         onPointerEnter={
           cameraPosition === "menu"
             ? () => {
                 setHovered(true);
-                api.start({
-                  opacity: 1,
-                });
               }
             : null
         }
         onPointerLeave={() => {
           setHovered(false);
-          api.start({
-            opacity: 0,
-          });
         }}
       >
         <planeGeometry args={[portalSize.width, portalSize.height]} />
         <meshStandardMaterial ref={matRef} />
       </mesh>
 
-      <ScreenTab title={data.tagTitle} opacity={springs.opacity || 0}>
-        TAG
-      </ScreenTab>
+      {hovered && <ScreenTab title={data.tagTitle}>TAG</ScreenTab>}
     </>
   );
 };

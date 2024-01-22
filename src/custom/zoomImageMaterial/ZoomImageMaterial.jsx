@@ -1,6 +1,6 @@
 import { useTexture } from "@react-three/drei";
 import { useSpring, animated, config } from "@react-spring/three";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import ThreeCustomShaderMaterial from "three-custom-shader-material";
 import { MeshStandardMaterial } from "three";
 
@@ -84,14 +84,14 @@ const ZoomImageMaterial = ({ hovered }) => {
     },
   };
 
-  const texture = useTexture("./assets/img/2.png");
+  const texture = useTexture("./assets/img/1.png");
 
   const { hoverValue } = useSpring({
     hoverValue: hovered ? 1 : 0,
     config: config.molasses,
   });
 
-  const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.08, metalness: 0.88 }), []);
+  const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.08, metalness: 0.5 }), []);
 
   const AnimatedThreeCustomShaderMaterial = animated(ThreeCustomShaderMaterial);
 

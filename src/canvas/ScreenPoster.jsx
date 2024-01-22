@@ -1,6 +1,8 @@
 import { useTexture } from "@react-three/drei";
 import useAppStore from "../store";
 import { useEffect, useRef } from "react";
+import HovereablePlane from "./HovereablePlane";
+import ZoomImageMaterial from "../custom/zoomImageMaterial/ZoomImageMaterial";
 
 const ScreenPoster = ({ data, portalSize, visible }) => {
   const addScreenContainer = useAppStore(state => state.addScreenContainer);
@@ -14,10 +16,13 @@ const ScreenPoster = ({ data, portalSize, visible }) => {
   }, []);
 
   return (
-    <mesh position={[0, 0, 0]} ref={groupRef} visible={visible}>
+    <>
+      {/*<mesh position={[0, 0, 0]} ref={groupRef} visible={visible}>
       <planeGeometry args={[portalSize.width, portalSize.height]} />
       <meshBasicMaterial map={texture}></meshBasicMaterial>
-    </mesh>
+    </mesh>*/}
+      <HovereablePlane Material={ZoomImageMaterial} size={[portalSize.width, portalSize.height]}></HovereablePlane>
+    </>
   );
 };
 

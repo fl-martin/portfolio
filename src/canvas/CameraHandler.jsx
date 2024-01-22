@@ -77,12 +77,12 @@ const CameraHandler = () => {
   useFrame(state => {
     if (screen == "welcome") {
       // Camera Rig animation
-      cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 5, -state.pointer.y * 5, 25, 0, 10, 100, true);
+      cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 10, -state.pointer.y * 5, 25, 0, 10, 100, true);
     } else if (screen === "contact") {
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 5, -state.pointer.y * 5 + 20, 0, 0, 40, -10, true);
     } else if (screen == "menu" && cameraMode == "rig") {
       // Camera Rig animation
-      cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 3, -state.pointer.y * 2, 10, 0, 0, -10, true);
+      cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 10, -state.pointer.y * 2, 10, 0, 0, -10, true);
     } else if (cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu" && DOControls?.enabled) {
       // DeviceOrientationControls update, una vez que la camara esta en posicion menu
       DOControls.update();

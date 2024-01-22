@@ -55,7 +55,7 @@ function FadingImage() {
   const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.1, metalness: 0.8 }), []);
 
   return (
-    <mesh onPointerOver={e => setHover(true)} onPointerOut={e => setHover(false)} position={[0, 0, -11]}>
+    <mesh onPointerEnter={e => setHover(true)} onPointerLeave={e => setHover(false)} position={[0, 0, -11]}>
       <planeGeometry args={[6, 8]} />
 
       <ThreeCustomShaderMaterial
