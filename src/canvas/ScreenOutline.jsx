@@ -1,9 +1,8 @@
-import { useMemo, useRef, useState } from "react";
+import { Color } from "three";
+import ScreenTab from "./ScreenTab";
 import useAppStore from "../store";
 import { useFrame } from "@react-three/fiber";
-import { Color } from "three";
-import { useSpring } from "@react-spring/three";
-import ScreenTab from "./ScreenTab";
+import { useMemo, useRef, useState } from "react";
 
 const ScreenOutline = ({ portalSize, experienceName, visible, data }) => {
   const cameraPosition = useAppStore(state => state.currentCameraPosition);
@@ -46,7 +45,9 @@ const ScreenOutline = ({ portalSize, experienceName, visible, data }) => {
         <meshStandardMaterial ref={matRef} />
       </mesh>
 
-      {hovered && <ScreenTab title={data.tagTitle}>TAG</ScreenTab>}
+      <ScreenTab title={data.tagTitle} hovered={hovered}>
+        TAG
+      </ScreenTab>
     </>
   );
 };

@@ -15,15 +15,7 @@ const ScreenPoster = ({ data, portalSize, visible }) => {
     addScreenContainer(data.name, groupRef.current);
   }, []);
 
-  return (
-    <>
-      {/*<mesh position={[0, 0, 0]} ref={groupRef} visible={visible}>
-      <planeGeometry args={[portalSize.width, portalSize.height]} />
-      <meshBasicMaterial map={texture}></meshBasicMaterial>
-    </mesh>*/}
-      <HovereablePlane Material={ZoomImageMaterial} size={[portalSize.width, portalSize.height]}></HovereablePlane>
-    </>
-  );
+  return <HovereablePlane Material={ZoomImageMaterial} size={[portalSize.width, portalSize.height]}></HovereablePlane>;
 };
 
 export default ScreenPoster;
