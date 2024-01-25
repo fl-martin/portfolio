@@ -1,8 +1,11 @@
 import { useSpring, animated } from "@react-spring/three";
 import { Environment } from "@react-three/drei";
+import { useThemeMode } from "flowbite-react";
 import { BackSide } from "three";
 
-const MainBackground = ({ computedMode }) => {
+const MainBackground = () => {
+  const { computedMode } = useThemeMode();
+
   const springs = useSpring({
     color: computedMode === "dark" ? "#ff6d6d" : "#569AFF",
     config: { mass: 100, tension: 1, friction: 260 },

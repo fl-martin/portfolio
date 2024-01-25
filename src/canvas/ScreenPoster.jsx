@@ -1,21 +1,11 @@
-import { useTexture } from "@react-three/drei";
-import useAppStore from "../store";
-import { useEffect, useRef } from "react";
 import HovereablePlane from "./HovereablePlane";
+import { useTexture } from "@react-three/drei";
 import ZoomImageMaterial from "../custom/zoomImageMaterial/ZoomImageMaterial";
 
-const ScreenPoster = ({ data, portalSize, visible }) => {
-  const addScreenContainer = useAppStore(state => state.addScreenContainer);
+const ScreenPoster = ({ textureURL, portalSize }) => {
+  const texture = useTexture(textureURL);
 
-  const texture = useTexture(data.textureURL);
-
-  const groupRef = useRef();
-
-  useEffect(() => {
-    addScreenContainer(data.name, groupRef.current);
-  }, []);
-
-  return <HovereablePlane Material={ZoomImageMaterial} size={[portalSize.width, portalSize.height]}></HovereablePlane>;
+  return <HovereablePlane Material={ZoomImageMaterial} size={[portalSize.width, portalSize.height]} texture={texture}></HovereablePlane>;
 };
 
 export default ScreenPoster;

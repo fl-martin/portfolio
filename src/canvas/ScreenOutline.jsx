@@ -1,21 +1,14 @@
 import { Color } from "three";
-import ScreenTab from "./ScreenTab";
 import useAppStore from "../store";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 
-const ScreenOutline = ({ portalSize, experienceName, visible, data }) => {
-  const cameraPosition = useAppStore(state => state.currentCameraPosition);
-
+const ScreenOutline = ({ portalSize, experienceName, visible, hovered }) => {
   const currentExperience = useAppStore(state => state.currentExperience);
 
   const colorFrom = useMemo(() => new Color("#b04c4c"), []);
 
   const colorTo = useMemo(() => new Color("#ff96dc"), []);
-
-  const [hovered, setHovered] = useState(false);
-
-  const setExperience = useAppStore(state => state.setExperience);
 
   const matRef = useRef();
 
@@ -25,29 +18,10 @@ const ScreenOutline = ({ portalSize, experienceName, visible, data }) => {
 
   return (
     <>
-      <mesh
-        position={[0, 0, -0.01]}
-        visible={visible}
-        scale={hovered || currentExperience === experienceName ? 1.04 : 1.02}
-        //onClick={cameraPosition === "menu" ? () => setExperience(experienceName) : null}
-        onPointerEnter={
-          cameraPosition === "menu"
-            ? () => {
-                setHovered(true);
-              }
-            : null
-        }
-        onPointerLeave={() => {
-          setHovered(false);
-        }}
-      >
+      <mesh position={[0, 0, -0.01]} visible={visible} scale={hovered || currentExperience === experienceName ? 1.04 : 1.02}>
         <planeGeometry args={[portalSize.width, portalSize.height]} />
         <meshStandardMaterial ref={matRef} />
       </mesh>
-
-      <ScreenTab title={data.tagTitle} hovered={hovered}>
-        TAG
-      </ScreenTab>
     </>
   );
 };

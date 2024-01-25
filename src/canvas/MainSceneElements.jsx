@@ -1,12 +1,14 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import Ocean from "./Ocean";
 import plants1URL from "../assets/models/glowing_plants.glb";
 import plants2URL from "../assets/models/plants.glb";
 import plants3URL from "../assets/models/underwater_plant.glb";
+import React, { useMemo } from "react";
 import { useLoader } from "@react-three/fiber";
-import Ocean from "./Ocean";
-import { useMemo } from "react";
 
-const MainSceneElements = ({ ratioScale }) => {
+const MainSceneElements = React.memo(() => {
+  const ratioScale = Math.min(1, Math.max(0.8, window.innerWidth / 1920));
+
   const plants1 = useLoader(GLTFLoader, plants1URL);
   const plants2 = useLoader(GLTFLoader, plants2URL);
   const plants3 = useLoader(GLTFLoader, plants3URL);
@@ -64,6 +66,6 @@ const MainSceneElements = ({ ratioScale }) => {
       </group>
     </>
   );
-};
+});
 
 export default MainSceneElements;

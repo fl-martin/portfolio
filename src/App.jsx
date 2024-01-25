@@ -1,19 +1,18 @@
-import React, { Suspense } from "react";
+import CameraHandler from "./canvas/CameraHandler";
 import { Canvas } from "@react-three/fiber";
-import PostEffects from "./canvas/PostEffects";
-import Overlay from "./dom/Overlay";
-import MainScene from "./canvas/MainScene";
-import ScreensGroup from "./canvas/ScreensGroup";
+import ContactScreen from "./canvas/ContactScreen";
 import LoadingScreen from "./dom/LoadingScreen";
+import MainLights from "./canvas/MainLights";
+import MainScene from "./canvas/MainScene";
+import Overlay from "./dom/Overlay";
+import PostEffects from "./canvas/PostEffects";
+import React, { Suspense } from "react";
+import ScreensGroup from "./canvas/ScreensGroup";
+import { Preload, Stats } from "@react-three/drei";
 import useAppStore from "./store";
 import WelcomeScreen from "./canvas/WelcomeScreen";
-import ContactScreen from "./canvas/ContactScreen";
 
 const App = () => {
-  const screen = useAppStore(state => state.currentScreen);
-
-  const cameraPosition = useAppStore(state => state.currentCameraPosition);
-
   const cameraMode = useAppStore(state => state.currentCameraMode);
 
   return (
@@ -40,11 +39,16 @@ const App = () => {
               : null
           }
         >
-          {(screen === "welcome" || cameraPosition === "welcome") && <WelcomeScreen></WelcomeScreen>}
-          {(screen === "contact" || cameraPosition === "contact") && <ContactScreen></ContactScreen>}
-          <MainScene />
+          <CameraHandler></CameraHandler>
+          <WelcomeScreen></WelcomeScreen>
+          <ContactScreen></ContactScreen>
+          <MainScene>
+            <MainLights></MainLights>
+          </MainScene>
           <ScreensGroup />
           <PostEffects />
+          <Stats></Stats>
+          <Preload all></Preload>
         </Canvas>
       </Suspense>
       <Overlay />

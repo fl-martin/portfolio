@@ -43,11 +43,23 @@ const CameraHandler = () => {
 
       // Revisar solucion desde el control de estado. actualmente si no se usa set time out, no posiciona la cam en la posicion correcta
       setTimeout(() => {
-        cameraControls.current.fitToBox(screensContainers[currentExperience], true, { cover: true });
+        cameraControls.current.fitToBox(screensContainers[currentExperience], true, {
+          cover: true,
+          paddingTop: -0.1,
+          paddingLeft: -0.1,
+          paddingRight: -0.1,
+          paddingBottom: -0.1,
+        });
       }, 100);
     } else if (cameraPosition === "experience" && screen === "experience") {
       setTimeout(() => {
-        cameraControls.current.fitToBox(screensContainers[currentExperience], false, { cover: true });
+        cameraControls.current.fitToBox(screensContainers[currentExperience], false, {
+          cover: true,
+          paddingTop: -0.1,
+          paddingLeft: -0.1,
+          paddingRight: -0.1,
+          paddingBottom: -0.1,
+        });
       }, 100);
     }
   }, [screen, size]);

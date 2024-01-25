@@ -1,10 +1,9 @@
-import { useTexture } from "@react-three/drei";
+import { MeshPhongMaterial, MeshStandardMaterial } from "three";
+import ThreeCustomShaderMaterial from "three-custom-shader-material";
 import { useSpring, animated, config } from "@react-spring/three";
 import { useMemo } from "react";
-import ThreeCustomShaderMaterial from "three-custom-shader-material";
-import { MeshStandardMaterial } from "three";
 
-const ZoomImageMaterial = ({ hovered }) => {
+const ZoomImageMaterial = ({ hovered, texture }) => {
   var HoverImageShader = {
     vertexShader: ` varying vec2 vUv;
     void main() {
@@ -84,16 +83,17 @@ const ZoomImageMaterial = ({ hovered }) => {
     },
   };
 
-  const texture = useTexture("./assets/img/1.png");
-
   const { hoverValue } = useSpring({
     hoverValue: hovered ? 1 : 0,
     config: config.molasses,
   });
 
-  const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.08, metalness: 0.5 }), []);
+  //const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.08, metalness: 0.5 }), []);
+  // const baseMat = useMemo(() => new MeshBasicMaterial(), []);
+  const baseMat = useMemo(() => new MeshPhongMaterial(), []);
 
-  const AnimatedThreeCustomShaderMaterial = animated(ThreeCustomShaderMaterial);
+  const AnimatedThreeCustomShaderMaterial = useMemo(() => animated(ThreeCustomShaderMaterial), []);
+  //const AnimatedThreeCustomShaderMaterial = animated(ThreeCustomShaderMaterial);
 
   return (
     <AnimatedThreeCustomShaderMaterial
