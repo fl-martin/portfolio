@@ -59,7 +59,7 @@ const MainSceneElements = React.memo(() => {
         <primitive position={[-13, -5, -3]} rotation={[0, 0, 0]} object={plant3clone3} />
 
         <mesh receiveShadow rotation={[Math.PI * -0.5, 0, 0]} position={[0, 0, 10]}>
-          <ringGeometry args={[20, 32, 80]}></ringGeometry>
+          <ringGeometry args={[18, 27, 80]}></ringGeometry>
           <meshStandardMaterial emissive={"violet"} color={"violet"} emissiveIntensity={0.7} toneMapped={false}></meshStandardMaterial>
           <Ocean></Ocean>
         </mesh>

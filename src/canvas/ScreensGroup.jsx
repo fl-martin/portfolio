@@ -2,7 +2,7 @@ import Screen from "./Screen";
 import ScreenContainer from "./ScreenContainer";
 import ScreenPoster from "./ScreenPoster";
 import { screensData } from "../data/screensData";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useThree } from "@react-three/fiber";
 
 const ScreensGroup = React.memo(() => {
@@ -12,11 +12,15 @@ const ScreensGroup = React.memo(() => {
 
   const [portalSize, setPortalSize] = useState({ width: size.width * 0.01, height: size.height * 0.01 });
 
+  useEffect(() => {
+    setPortalSize({ width: size.width * 0.01, height: size.height * 0.01 });
+  }, [size]);
+
   return (
     <group scale={ratioScale} position={[0, 0, 5]}>
       {screensData.map((data, index) => {
         return (
-          <ScreenContainer data={data} index={index} screensArrayLength={screensData.length} key={index}>
+          <ScreenContainer data={data} index={index} screensArrayLength={screensData.length} key={index} portalSize={portalSize}>
             <ScreenPoster textureURL={data.textureURL} portalSize={portalSize}></ScreenPoster>
             <Screen data={data} portalSize={portalSize} />
           </ScreenContainer>

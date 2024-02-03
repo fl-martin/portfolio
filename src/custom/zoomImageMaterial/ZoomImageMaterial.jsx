@@ -88,9 +88,9 @@ const ZoomImageMaterial = ({ hovered, texture }) => {
     config: config.molasses,
   });
 
-  //const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.08, metalness: 0.5 }), []);
+  const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.1, metalness: 0.7 }), []);
   // const baseMat = useMemo(() => new MeshBasicMaterial(), []);
-  const baseMat = useMemo(() => new MeshPhongMaterial(), []);
+  //const baseMat = useMemo(() => new MeshPhongMaterial(), []);
 
   const AnimatedThreeCustomShaderMaterial = useMemo(() => animated(ThreeCustomShaderMaterial), []);
   //const AnimatedThreeCustomShaderMaterial = animated(ThreeCustomShaderMaterial);

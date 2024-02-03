@@ -16,30 +16,49 @@ const CameraHandler = () => {
   const camera = useThree(state => state.camera);
   const size = useThree(state => state.size);
   const [DOControls, setDOControls] = useState(null);
+  const [initAnimCompleted, setInitAnimCompleted] = useState(false);
   const cameraControls = useRef();
   const screenRef = useRef(screen);
   // Ref a utilizar dentro de un event listener, para acceder al ultimo estado (https://medium.com/geographit/accessing-react-state-in-event-listeners-with-usestate-and-useref-hooks-8cceee73c559)
   const setScreenRef = screen => {
     screenRef.current = screen;
   };
-  const [restThreshold, setRestThreshold] = useState(5);
+
+  async function firstAnimation() {
+    cameraControls.current.smoothTime = 0.5;
+    // await cameraControls.current.rotateTo(-Math.PI / 4, 0)
+    await cameraControls.current.rotateAzimuthTo(Math.PI / 2, false);
+    await cameraControls.current.rotateAzimuthTo(Math.PI * 2, true);
+
+    //await cameraControls.current.rotateTo(Math.PI / 2, Math.PI / 4, true);
+    //await cameraControls.current.dollyTo(3, true);
+    // await cameraControls.current.setFocalOffset(5, 0, 0, true);
+    // await cameraControls.current.setFocalOffset(-5, 0, 10, true);
+    //await cameraControls.current.rotateTo(0, 0);
+    //await cameraControls.current.setFocalOffset(0, 30, 0, true);
+
+    // await cameraControls.current.setLookAt(0, 5, 20, 0, -5, 0, true);
+    // setInitAnimCompleted(true);
+  }
 
   useEffect(() => {
     setScreenRef(screen);
     if (screen === "welcome") {
-      setRestThreshold(0.7);
+      cameraControls.current.restThreshold = 0.7;
 
-      cameraControls.current.setLookAt(0, 0, 25, 0, 10, 100, true);
+      cameraControls.current.smoothTime = 2;
     } else if (screen === "menu") {
-      setRestThreshold(0.9);
+      cameraControls.current.restThreshold = 0.9;
 
-      cameraControls.current.setLookAt(0, 0, 10, 0, 0, -10, true);
+      cameraControls.current.smoothTime = 0.5;
     } else if (screen === "contact") {
-      setRestThreshold(0.9);
+      cameraControls.current.restThreshold = 0.9;
 
-      cameraControls.current.setLookAt(0, 2, 0, 0, 40, -10, true);
+      cameraControls.current.smoothTime = 0.5;
     } else if (screen === "experience" && cameraPosition !== "experience") {
-      setRestThreshold(0.005);
+      cameraControls.current.restThreshold = 0.005;
+
+      cameraControls.current.smoothTime = 0.5;
 
       // Revisar solucion desde el control de estado. actualmente si no se usa set time out, no posiciona la cam en la posicion correcta
       setTimeout(() => {
@@ -79,7 +98,7 @@ const CameraHandler = () => {
     // Se hace de este modo para que IOS solicite el acceso a la camara, createDOControls es llamado directamente por el switch
     setCreateDOControls(() => setDOControls(new DeviceOrientationControls(camera)));
 
-    cameraControls.current.setLookAt(0, 0, 25, 0, 40, 100, false);
+    firstAnimation();
 
     cameraControls.current.addEventListener("rest", () => {
       setCurrentCameraPosition(screenRef.current);
@@ -87,6 +106,8 @@ const CameraHandler = () => {
   }, []);
 
   useFrame(state => {
+    if (!initAnimCompleted) return;
+
     if (screen == "welcome") {
       // Camera Rig animation
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 10, -state.pointer.y * 5, 25, 0, 10, 100, true);
@@ -105,8 +126,8 @@ const CameraHandler = () => {
     <>
       <CameraControls
         ref={cameraControls}
-        smoothTime={0.5}
-        restThreshold={restThreshold}
+        smoothTime={0.25}
+        restThreshold={0.005}
         touches={{
           one: 0,
           two: 0,

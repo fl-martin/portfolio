@@ -2,9 +2,8 @@ import ScreenOutline from "./ScreenOutline";
 import ScreenTab from "./ScreenTab";
 import useAppStore from "../store";
 import { useEffect, useRef, useState } from "react";
-import { useThree } from "@react-three/fiber";
 
-const ScreenContainer = ({ data, index, screensArrayLength, children }) => {
+const ScreenContainer = ({ data, index, screensArrayLength, children, portalSize }) => {
   const setExperience = useAppStore(state => state.setExperience);
 
   const addScreenContainer = useAppStore(state => state.addScreenContainer);
@@ -12,10 +11,6 @@ const ScreenContainer = ({ data, index, screensArrayLength, children }) => {
   const screen = useAppStore(state => state.currentScreen);
 
   const cameraPosition = useAppStore(state => state.currentCameraPosition);
-
-  const size = useThree(state => state.size);
-
-  const [portalSize, setPortalSize] = useState({ width: size.width * 0.01, height: size.height * 0.01 });
 
   const [hovered, setHovered] = useState(false);
 
@@ -36,10 +31,6 @@ const ScreenContainer = ({ data, index, screensArrayLength, children }) => {
       setVisible(true);
     }
   }, [cameraPosition, screen]);
-
-  useEffect(() => {
-    setPortalSize({ width: size.width * 0.01, height: size.height * 0.01 });
-  }, [size]);
 
   const totalWidth = screensArrayLength * (portalSize.width + 2); // El 2 es el espacio horizontal entre los elementos
   const centerX = -totalWidth / 2 + portalSize.width / 2; // Calcula la posición X del centro

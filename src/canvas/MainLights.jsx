@@ -46,12 +46,12 @@ const MainLights = () => {
 
   useEffect(() => {
     if (computedMode === "dark") {
-      dirIntensityCtrl.start({ value: 1 });
-      ambIntensityCtrl.start({ value: 0, config: { mass: 1, tension: 170, friction: 26 } });
+      dirIntensityCtrl.start({ value: 0.8 });
+      ambIntensityCtrl.start({ value: 0.5, config: { mass: 1, tension: 170, friction: 26 } });
       dirPositionYCtrl.start({ value: 10 });
     } else if (computedMode === "light") {
       dirIntensityCtrl.start({ value: 0 });
-      ambIntensityCtrl.start({ value: 0.9, config: { mass: 1, tension: 170, friction: 26 } });
+      ambIntensityCtrl.start({ value: 0.8, config: { mass: 1, tension: 170, friction: 26 } });
       dirPositionYCtrl.start({ value: 1 });
     }
   }, [computedMode]);
@@ -67,6 +67,7 @@ const MainLights = () => {
       <animated.hemisphereLight intensity={ambIntensity.value}></animated.hemisphereLight>
       <object3D position={[pointer.x * 10, 0, -10]} ref={targetD}></object3D>
       <object3D position={[0, 8, -10]} ref={targetD2}></object3D>
+      <directionalLight position={[12, 40, 0]} target={targetD2.current} intensity={0.4}></directionalLight>
       {computedMode === "dark" && (screen === "menu" || cameraPosition !== "experience") && (
         <>
           <animated.directionalLight
@@ -76,7 +77,6 @@ const MainLights = () => {
             target={targetD.current}
             castShadow
           ></animated.directionalLight>
-          <directionalLight position={[12, 8, 0]} target={targetD2.current} intensity={0.4}></directionalLight>
         </>
       )}
     </>
