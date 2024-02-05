@@ -3,7 +3,7 @@ import ThreeCustomShaderMaterial from "three-custom-shader-material";
 import { useSpring, animated, config } from "@react-spring/three";
 import { useMemo } from "react";
 
-const ZoomImageMaterial = ({ hovered, texture }) => {
+const ZoomImageMaterial = ({ hovered, texture, aspectRatio }) => {
   var HoverImageShader = {
     vertexShader: ` varying vec2 vUv;
     void main() {
@@ -95,6 +95,15 @@ const ZoomImageMaterial = ({ hovered, texture }) => {
   const AnimatedThreeCustomShaderMaterial = useMemo(() => animated(ThreeCustomShaderMaterial), []);
   //const AnimatedThreeCustomShaderMaterial = animated(ThreeCustomShaderMaterial);
 
+  const imageAspectRatio = useMemo(() => {
+    if (texture) {
+      return texture.image.width / texture.image.height;
+    }
+    return 1.0;
+  }, [texture]);
+
+  console.log(imageAspectRatio, aspectRatio);
+
   return (
     <AnimatedThreeCustomShaderMaterial
       baseMaterial={baseMat}
@@ -104,6 +113,8 @@ const ZoomImageMaterial = ({ hovered, texture }) => {
       uniforms={HoverImageShader.uniforms}
       uniforms-hover-value={hoverValue}
       uniforms-tex-value={texture}
+      uniforms-imageAspectRatio-value={imageAspectRatio}
+      uniforms-aspectRatio-value={aspectRatio}
     ></AnimatedThreeCustomShaderMaterial>
   );
 };

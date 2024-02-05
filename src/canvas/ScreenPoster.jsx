@@ -5,7 +5,7 @@ import ZoomImageMaterial from "../custom/zoomImageMaterial/ZoomImageMaterial";
 const ScreenPoster = ({ textureURL, portalSize }) => {
   const texture = useTexture(textureURL);
 
-  return <HovereablePlane Material={ZoomImageMaterial} size={[portalSize.width, portalSize.height]} texture={texture}></HovereablePlane>;
+  return <HovereablePlane Material={ZoomImageMaterial} portalSize={portalSize} texture={texture}></HovereablePlane>;
 };
 
 export default ScreenPoster;
