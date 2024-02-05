@@ -6098,12 +6098,17 @@ list should be an Array.`),O.length===0)return new D(0);if(O.length===1)return O
   
         // fix aspectRatio
         float u = imageAspectRatio/aspectRatio;
+        
         if(imageAspectRatio > aspectRatio) {
           u = 1. / u;
+          uv.x *= u;
+          uv.x -= (u)/2.-.5;
         }
-  
-        uv.y *= u;
-        uv.y -= (u)/2.-.5;
+
+        if(imageAspectRatio < aspectRatio) {
+          uv.y *= u;
+          uv.y -= (u)/2.-.5;
+        }
   
         // hover effect
         float zoomLevel = .2;
