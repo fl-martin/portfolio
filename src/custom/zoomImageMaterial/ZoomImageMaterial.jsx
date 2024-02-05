@@ -32,12 +32,17 @@ const ZoomImageMaterial = ({ hovered, texture, aspectRatio }) => {
   
         // fix aspectRatio
         float u = imageAspectRatio/aspectRatio;
+
         if(imageAspectRatio > aspectRatio) {
           u = 1. / u;
+          uv.x *= u;
+          uv.x -= (u)/2.-.5;
         }
-  
-        uv.y *= u;
-        uv.y -= (u)/2.-.5;
+
+        if(imageAspectRatio < aspectRatio) {
+          uv.y *= u;
+          uv.y -= (u)/2.-.5;
+        }
   
         // hover effect
         float zoomLevel = .2;
@@ -88,12 +93,11 @@ const ZoomImageMaterial = ({ hovered, texture, aspectRatio }) => {
     config: config.molasses,
   });
 
-  const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.1, metalness: 0.7 }), []);
+  const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.3, metalness: 0.5 }), []);
   // const baseMat = useMemo(() => new MeshBasicMaterial(), []);
   //const baseMat = useMemo(() => new MeshPhongMaterial(), []);
 
   const AnimatedThreeCustomShaderMaterial = useMemo(() => animated(ThreeCustomShaderMaterial), []);
-  //const AnimatedThreeCustomShaderMaterial = animated(ThreeCustomShaderMaterial);
 
   const imageAspectRatio = useMemo(() => {
     if (texture) {
@@ -101,8 +105,6 @@ const ZoomImageMaterial = ({ hovered, texture, aspectRatio }) => {
     }
     return 1.0;
   }, [texture]);
-
-  console.log(imageAspectRatio, aspectRatio);
 
   return (
     <AnimatedThreeCustomShaderMaterial

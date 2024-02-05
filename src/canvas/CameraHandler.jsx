@@ -25,19 +25,11 @@ const CameraHandler = () => {
   };
 
   async function firstAnimation() {
-    cameraControls.current.smoothTime = 0.5;
-    // await cameraControls.current.rotateTo(-Math.PI / 4, 0)
-    //await cameraControls.current.rotateAzimuthTo(Math.PI / 2, false);
-    //await cameraControls.current.rotateAzimuthTo(Math.PI * 2, true);
+    cameraControls.current.smoothTime = 1;
 
-    //await cameraControls.current.rotateTo(Math.PI / 2, Math.PI / 4, true);
-    //await cameraControls.current.dollyTo(3, true);
-    // await cameraControls.current.setFocalOffset(5, 0, 0, true);
-    // await cameraControls.current.setFocalOffset(-5, 0, 10, true);
-    //await cameraControls.current.rotateTo(0, 0);
-    //await cameraControls.current.setFocalOffset(0, 30, 0, true);
+    await cameraControls.current.rotateTo(0, -20, true);
+    await cameraControls.current.setLookAt(0, 5, 30, 0, -5, 0, true);
 
-    await cameraControls.current.setLookAt(0, 5, 20, 0, -5, 0, true);
     setInitAnimCompleted(true);
   }
 
@@ -46,7 +38,7 @@ const CameraHandler = () => {
     if (screen === "welcome") {
       cameraControls.current.restThreshold = 0.7;
 
-      cameraControls.current.smoothTime = 2;
+      cameraControls.current.smoothTime = 1;
     } else if (screen === "menu") {
       cameraControls.current.restThreshold = 0.9;
 
@@ -101,7 +93,6 @@ const CameraHandler = () => {
     firstAnimation();
 
     cameraControls.current.addEventListener("rest", () => {
-      console.log("rest");
       setCurrentCameraPosition(screenRef.current);
     });
   }, []);

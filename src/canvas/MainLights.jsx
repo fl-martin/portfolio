@@ -1,13 +1,11 @@
+import useAppStore from "../store";
 import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
 import { useThemeMode } from "flowbite-react";
-import useAppStore from "../store";
 
 const MainLights = () => {
   const screen = useAppStore(state => state.currentScreen);
-
-  const cameraPosition = useAppStore(state => state.currentCameraPosition);
 
   const { computedMode } = useThemeMode();
 
@@ -46,8 +44,8 @@ const MainLights = () => {
 
   useEffect(() => {
     if (computedMode === "dark") {
-      dirIntensityCtrl.start({ value: 0.8 });
-      ambIntensityCtrl.start({ value: 0.5, config: { mass: 1, tension: 170, friction: 26 } });
+      dirIntensityCtrl.start({ value: 1 });
+      ambIntensityCtrl.start({ value: 0.2, config: { mass: 1, tension: 170, friction: 26 } });
       dirPositionYCtrl.start({ value: 10 });
     } else if (computedMode === "light") {
       dirIntensityCtrl.start({ value: 0 });
@@ -57,7 +55,7 @@ const MainLights = () => {
   }, [computedMode]);
 
   useFrame(() => {
-    if (computedMode === "dark" && cameraPosition === "menu") {
+    if (computedMode === "dark" && screen === "menu") {
       targetD.current?.position.set(pointer.x * 10, 0, -10);
     }
   });
@@ -65,20 +63,15 @@ const MainLights = () => {
   return (
     <>
       <animated.hemisphereLight intensity={ambIntensity.value}></animated.hemisphereLight>
-      <object3D position={[pointer.x * 10, 0, -10]} ref={targetD}></object3D>
+      <object3D position={[0, 0, -10]} ref={targetD}></object3D>
       <object3D position={[0, 8, -10]} ref={targetD2}></object3D>
-      <directionalLight position={[12, 40, 0]} target={targetD2.current} intensity={0.4}></directionalLight>
-      {computedMode === "dark" && (screen === "menu" || cameraPosition !== "experience") && (
-        <>
-          <animated.directionalLight
-            intensity={dirIntensity.value}
-            position-x={-8}
-            position-y={dirPositionY.value}
-            target={targetD.current}
-            castShadow
-          ></animated.directionalLight>
-        </>
-      )}
+      <animated.directionalLight
+        intensity={dirIntensity.value}
+        position-x={-8}
+        position-y={dirPositionY.value}
+        target={targetD.current}
+        castShadow
+      ></animated.directionalLight>
     </>
   );
 };
