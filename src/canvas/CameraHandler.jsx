@@ -6,6 +6,7 @@ import { DeviceOrientationControls } from "../custom/controls/DeviceOrientationC
 import PointerLockCamera from "./PointerLockCamera";
 
 const CameraHandler = () => {
+  const isMobile = useAppStore(state => state.isMobile);
   const screen = useAppStore(state => state.currentScreen);
   const currentExperience = useAppStore(state => state.currentExperience);
   const cameraMode = useAppStore(state => state.currentCameraMode);
@@ -15,6 +16,7 @@ const CameraHandler = () => {
   const setCreateDOControls = useAppStore(state => state.setCreateDOControls);
   const camera = useThree(state => state.camera);
   const size = useThree(state => state.size);
+  const gl = useThree(state => state.gl);
   const [DOControls, setDOControls] = useState(null);
   const [initAnimCompleted, setInitAnimCompleted] = useState(false);
   const cameraControls = useRef();
@@ -29,6 +31,7 @@ const CameraHandler = () => {
 
     await cameraControls.current.rotateTo(0, -20, true);
     await cameraControls.current.setLookAt(0, 5, 30, 0, -5, 0, true);
+    await cameraControls.current.setLookAt(0, 0, 25, 0, 10, 100, true);
 
     setInitAnimCompleted(true);
   }
@@ -43,6 +46,8 @@ const CameraHandler = () => {
       cameraControls.current.restThreshold = 0.9;
 
       cameraControls.current.smoothTime = 0.5;
+
+      cameraControls.current.setLookAt(0, 0, 10, 0, 0, -10, true);
     } else if (screen === "contact") {
       cameraControls.current.restThreshold = 0.9;
 
@@ -76,13 +81,22 @@ const CameraHandler = () => {
   }, [screen, size]);
 
   useEffect(() => {
+    if (!isMobile) cameraControls.current.disconnect();
+  }, []);
+
+  useEffect(() => {
+    // solo en dispositivos mobiles, via CameraModeSwitch
     if (cameraMode === "deviceOrientation") {
+      cameraControls.current.disconnect();
+
       // Centra la camara al cambiar el modo
       cameraControls.current.setLookAt(0, 0, 6, 0, 0, -10, true);
     } else if (DOControls && cameraMode === "rig") {
       DOControls.dispose();
 
       setDOControls(null);
+
+      cameraControls.current.connect(gl.domElement);
     }
   }, [cameraMode]);
 
@@ -100,12 +114,12 @@ const CameraHandler = () => {
   useFrame(state => {
     if (!initAnimCompleted) return;
 
-    if (screen == "welcome") {
+    if (screen == "welcome" && !isMobile) {
       // Camera Rig animation
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 10, -state.pointer.y * 5, 25, 0, 10, 100, true);
-    } else if (screen === "contact") {
+    } else if (screen === "contact" && !isMobile) {
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 5, -state.pointer.y * 5 + 20, 0, 0, 40, -10, true);
-    } else if (screen == "menu" && cameraMode == "rig") {
+    } else if (screen == "menu" && cameraMode == "rig" && !isMobile) {
       // Camera Rig animation
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 10, -state.pointer.y * 2, 10, 0, 0, -10, true);
     } else if (cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu" && DOControls?.enabled) {
@@ -116,21 +130,7 @@ const CameraHandler = () => {
 
   return (
     <>
-      <CameraControls
-        ref={cameraControls}
-        smoothTime={0.25}
-        restThreshold={0.005}
-        touches={{
-          one: 0,
-          two: 0,
-          three: 0,
-        }}
-        mouseButtons={{
-          left: 0,
-          middle: 0,
-          right: 0,
-        }}
-      ></CameraControls>
+      <CameraControls ref={cameraControls} smoothTime={0.25} restThreshold={0.005}></CameraControls>
       {cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu" && <PointerLockCamera></PointerLockCamera>}
     </>
   );

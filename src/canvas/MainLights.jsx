@@ -1,5 +1,6 @@
+import { Object3D } from "three";
 import useAppStore from "../store";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
 import { useThemeMode } from "flowbite-react";
@@ -11,8 +12,7 @@ const MainLights = () => {
 
   const pointer = useThree(state => state.pointer);
 
-  const targetD = useRef();
-  const targetD2 = useRef();
+  const target = new Object3D();
 
   const [dirIntensity, dirIntensityCtrl] = useSpring(
     () => ({
@@ -54,23 +54,28 @@ const MainLights = () => {
     }
   }, [computedMode]);
 
+  useEffect(() => {
+    if (screen !== "menu") {
+      target.position.set(0, 0, -10);
+    }
+  }, [screen]);
+
   useFrame(() => {
     if (computedMode === "dark" && screen === "menu") {
-      targetD.current?.position.set(pointer.x * 10, 0, -10);
+      target.position.set(pointer.x * 10, 0, -10);
     }
   });
 
   return (
     <>
       <animated.hemisphereLight intensity={ambIntensity.value}></animated.hemisphereLight>
-      <object3D position={[0, 0, -10]} ref={targetD}></object3D>
-      <object3D position={[0, 8, -10]} ref={targetD2}></object3D>
+      <primitive object={target}></primitive>
       <animated.directionalLight
         intensity={dirIntensity.value}
         position-x={-8}
         position-y={dirPositionY.value}
-        target={targetD.current}
         castShadow
+        target={target}
       ></animated.directionalLight>
     </>
   );

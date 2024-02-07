@@ -9,14 +9,13 @@ import PostEffects from "./canvas/PostEffects";
 import React, { Suspense } from "react";
 import ScreensGroup from "./canvas/ScreensGroup";
 import { Preload, Stats } from "@react-three/drei";
-import useAppStore from "./store";
 import WelcomeScreen from "./canvas/WelcomeScreen";
 
 const App = () => {
   return (
     <>
       <Suspense fallback={<LoadingScreen />}>
-        <Canvas camera={{ position: [0, 0, 6] }} shadows style={{ background: "black" }}>
+        <Canvas camera={{ position: [0, 0, 10] }} shadows style={{ background: "black" }}>
           <CameraHandler></CameraHandler>
           <WelcomeScreen></WelcomeScreen>
           <ContactScreen></ContactScreen>
