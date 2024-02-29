@@ -14,7 +14,7 @@ import {
 import { useLayoutEffect } from "react";
 import { MeshBasicMaterial } from "three";
 
-const Experience2 = () => {
+const ReflectionsShadows = () => {
   const ratioScale = Math.min(2, Math.max(0.1, window.innerWidth / 1920));
 
   const sphereTextures = useTexture({
@@ -94,7 +94,7 @@ const Experience2 = () => {
   );
 };
 
-export default Experience2;
+export default ReflectionsShadows;
 
 function Suzi(props) {
   const { scene } = useGLTF("./assets/models/crystal_stone_rock.glb");

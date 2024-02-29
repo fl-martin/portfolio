@@ -1,15 +1,15 @@
 import { lerp } from "three/src/math/MathUtils";
 import { MeshStandardMaterial } from "three";
 import ThreeCustomShaderMaterial from "three-custom-shader-material";
-import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
+import { useTexture } from "@react-three/drei";
 
 function FadingImage() {
   const ref = useRef();
   const materialRef = useRef();
 
-  const [texture1, texture2, dispTexture] = useTexture(["./assets/img/1.png", "./assets/img/2.png", "./assets/img/3.png"]);
+  const [texture1, texture2, dispTexture] = useTexture(["./assets/img/2.png", "./assets/img/3.png", "./assets/img/3.png"]);
   const [hovered, setHover] = useState(false);
 
   useFrame(() => {

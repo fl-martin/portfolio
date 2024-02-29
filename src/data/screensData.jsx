@@ -1,43 +1,41 @@
-import { Box } from "@react-three/drei";
-import Experience from "../canvas/Experience";
-import Experience2 from "../canvas/Experience2";
-import Experience3 from "../canvas/Experience3";
+import PointerEffects from "../canvas/PointerEffects";
+import ReflectionsShadows from "../canvas/ReflectionsShadows";
+import RapierDemo from "../canvas/RapierDemo";
+import hqPoster from "../assets/images/hq-rendering-poster.png";
+import rapierPoster from "../assets/images/rapier-poster.png";
+import pointerEffectsPoster from "../assets/images/pointer-effects-poster.png";
 
 export const screensData = [
   {
     name: "rapierDemo1",
-    position: { x: -20, y: 0, z: -18 },
-    textureURL: "./assets/img/1.png",
-    textureOnHoverURL: "./assets/img/2.png",
+    position: { y: 0, z: -18 },
+    textureURL: rapierPoster,
     outlineColor: "hotpink",
     tagTitle: "Physics",
-    experience: <Experience3 />,
+    experience: <RapierDemo />,
   },
   {
-    name: "rapierDemo2",
-    position: { x: -7, y: 0, z: -20 },
-    textureURL: "./assets/img/1.png",
-    textureOnHoverURL: "./assets/img/2.png",
+    name: "reflectionsShadows",
+    position: { y: 0, z: -18 },
+    textureURL: hqPoster,
     outlineColor: "hotpink",
-    tagTitle: "High Quality Rendering",
-    experience: <Experience2 />,
+    tagTitle: "Reflections & Soft Shadows",
+    experience: <ReflectionsShadows />,
   },
   {
-    name: "rapierDemo",
-    position: { x: 7, y: 0, z: -20 },
-    textureURL: "./assets/img/1.png",
-    textureOnHoverURL: "./assets/img/2.png",
+    name: "pointerEffects",
+    position: { y: 0, z: -18 },
+    textureURL: pointerEffectsPoster,
     outlineColor: "hotpink",
     tagTitle: "Pointer Effects",
-    experience: <Experience />,
+    experience: <PointerEffects />,
   },
-  {
+  /*{
     name: "rapierDemo4",
     position: { x: 20, y: 0, z: -18 },
     textureURL: "./assets/img/1.png",
-    textureOnHoverURL: "./assets/img/2.png",
     outlineColor: "hotpink",
     tagTitle: "Character Controller",
     experience: <Box />,
-  },
+  },*/
 ];

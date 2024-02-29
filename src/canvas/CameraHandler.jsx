@@ -14,9 +14,7 @@ const CameraHandler = () => {
   const setCurrentCameraPosition = useAppStore(state => state.setCurrentCameraPosition);
   const screensContainers = useAppStore(state => state.screensContainers);
   const setCreateDOControls = useAppStore(state => state.setCreateDOControls);
-  const camera = useThree(state => state.camera);
-  const size = useThree(state => state.size);
-  const gl = useThree(state => state.gl);
+  const { camera, size, gl } = useThree(state => state);
   const [DOControls, setDOControls] = useState(null);
   const [initAnimCompleted, setInitAnimCompleted] = useState(false);
   const cameraControls = useRef();
@@ -28,6 +26,7 @@ const CameraHandler = () => {
 
   async function firstAnimation() {
     cameraControls.current.smoothTime = 1;
+    cameraControls.current.restThreshold = 0.7;
 
     await cameraControls.current.rotateTo(0, -20, true);
     await cameraControls.current.setLookAt(0, 5, 30, 0, -5, 0, true);
@@ -37,22 +36,35 @@ const CameraHandler = () => {
   }
 
   useEffect(() => {
-    setScreenRef(screen);
+    if (!initAnimCompleted && screen === "welcome") return;
+
     if (screen === "welcome") {
+      setScreenRef(screen);
+
       cameraControls.current.restThreshold = 0.7;
 
       cameraControls.current.smoothTime = 1;
+
+      cameraControls.current.setLookAt(0, 0, 25, 0, 10, 100, true);
     } else if (screen === "menu") {
-      cameraControls.current.restThreshold = 0.9;
+      setScreenRef(screen);
+
+      cameraControls.current.restThreshold = 0.5;
 
       cameraControls.current.smoothTime = 0.5;
 
       cameraControls.current.setLookAt(0, 0, 10, 0, 0, -10, true);
     } else if (screen === "contact") {
+      setScreenRef(screen);
+
       cameraControls.current.restThreshold = 0.9;
 
       cameraControls.current.smoothTime = 0.5;
+
+      cameraControls.current.setLookAt(0, 0, 0, 0, 40, -10, true);
     } else if (screen === "experience" && cameraPosition !== "experience") {
+      setScreenRef(screen);
+
       cameraControls.current.restThreshold = 0.005;
 
       cameraControls.current.smoothTime = 0.5;
@@ -61,24 +73,24 @@ const CameraHandler = () => {
       setTimeout(() => {
         cameraControls.current.fitToBox(screensContainers[currentExperience], true, {
           cover: true,
-          paddingTop: -0.1,
-          paddingLeft: -0.1,
-          paddingRight: -0.1,
-          paddingBottom: -0.1,
+          paddingTop: -0.11,
+          paddingLeft: -0.11,
+          paddingRight: -0.11,
+          paddingBottom: -0.11,
         });
       }, 100);
     } else if (cameraPosition === "experience" && screen === "experience") {
       setTimeout(() => {
         cameraControls.current.fitToBox(screensContainers[currentExperience], false, {
           cover: true,
-          paddingTop: -0.1,
-          paddingLeft: -0.1,
-          paddingRight: -0.1,
-          paddingBottom: -0.1,
+          paddingTop: -0.11,
+          paddingLeft: -0.11,
+          paddingRight: -0.11,
+          paddingBottom: -0.11,
         });
       }, 100);
     }
-  }, [screen, size]);
+  }, [screen, size, cameraPosition]);
 
   useEffect(() => {
     if (!isMobile) cameraControls.current.disconnect();
@@ -119,7 +131,7 @@ const CameraHandler = () => {
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 10, -state.pointer.y * 5, 25, 0, 10, 100, true);
     } else if (screen === "contact" && !isMobile) {
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 5, -state.pointer.y * 5 + 20, 0, 0, 40, -10, true);
-    } else if (screen == "menu" && cameraMode == "rig" && !isMobile) {
+    } else if (screen === "menu" && cameraMode === "rig" && !isMobile) {
       // Camera Rig animation
       cameraControls.current.setLookAt((state.pointer.x * state.viewport.width) / 10, -state.pointer.y * 2, 10, 0, 0, -10, true);
     } else if (cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu" && DOControls?.enabled) {
@@ -130,7 +142,7 @@ const CameraHandler = () => {
 
   return (
     <>
-      <CameraControls ref={cameraControls} smoothTime={0.25} restThreshold={0.005}></CameraControls>
+      <CameraControls ref={cameraControls} smoothTime={0.25} restThreshold={0.5}></CameraControls>
       {cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu" && <PointerLockCamera></PointerLockCamera>}
     </>
   );

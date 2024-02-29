@@ -15,10 +15,11 @@ const WelcomeScreen = () => {
           <div className='bg-sky-950/50 p-4  container  flex flex-col justify-between rounded transition-all '>
             <div className='flex md:flex-row flex-col'>
               <div className='text-center md:text-left font-thin text-4xl md:text-6xl text-neutral-200 transition-all '>
-                FEDERICO L. MARTIN
+                <span style={{ whiteSpace: "nowrap" }}>FEDERICO L.</span> MARTIN
               </div>
-              <div className='text-center my-4 md:m-0 md:ml-5 md:text-justify font-light text-neutral-200 transition-all '>
-                Hi! I'm a 3D web developer, in this site you can find different experiences built with ThreeJS
+              <div className='text-center my-4 md:m-0 md:ml-5 md:mb-2 md:text-justify font-light text-neutral-200 transition-all '>
+                Welcome to my portfolio! As a digital creator, I'm passionate about crafting captivating 3D experiences for the web. You'll
+                discover a range of projects here, from stunning visualizations to interactive environments.
               </div>
             </div>
             <div className='self-center md:self-end flex flex-wrap justify-center gap-y-2 gap-x-2'>

@@ -16,7 +16,9 @@ const ContactScreen = () => {
             <div className='flex flex-col items-center pb-5'>
               <img alt='Federico image' height='96' width='96' className='mb-3 rounded-full shadow-lg' src={avatarImg} />
               <h5 className='mb-1 text-xl font-medium text-gray-900 dark:text-white'>Federico L. Martin</h5>
-              <span className='text-sm text-gray-500 dark:text-gray-400'>Three JS | webXR</span>
+              <span className='text-sm text-center text-gray-500 dark:text-gray-400'>
+                Creative Developer <br /> Three.js | R3F | WebXR
+              </span>
               <div className='mt-4 flex-column space-y-3 lg:mt-6'>
                 <div className='flex space-x-3 justify-between'>
                   <a
@@ -26,7 +28,7 @@ const ContactScreen = () => {
                     Email
                   </a>
                   <a
-                    href='https://www.canva.com/design/DAEixZQ711M/O_xFC4WJP2W8oIUGlSMnhw/view?website#2'
+                    href='https://flmartin.my.canva.site/about'
                     target='_blank'
                     rel='noopener noreferrer'
                     className='inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700'

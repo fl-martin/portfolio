@@ -1,4 +1,4 @@
-import { MeshPhongMaterial, MeshStandardMaterial } from "three";
+import { MeshStandardMaterial } from "three";
 import ThreeCustomShaderMaterial from "three-custom-shader-material";
 import { useSpring, animated, config } from "@react-spring/three";
 import { useMemo } from "react";
@@ -94,8 +94,6 @@ const ZoomImageMaterial = ({ hovered, texture, aspectRatio }) => {
   });
 
   const baseMat = useMemo(() => new MeshStandardMaterial({ roughness: 0.3, metalness: 0.5 }), []);
-  // const baseMat = useMemo(() => new MeshBasicMaterial(), []);
-  //const baseMat = useMemo(() => new MeshPhongMaterial(), []);
 
   const AnimatedThreeCustomShaderMaterial = useMemo(() => animated(ThreeCustomShaderMaterial), []);
 

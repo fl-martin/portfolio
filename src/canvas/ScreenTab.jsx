@@ -1,8 +1,11 @@
 import { animated, useTransition } from "@react-spring/web";
 import { Html } from "@react-three/drei";
+import useAppStore from "../store";
 
-const ScreenTab = ({ title, hovered }) => {
-  const transitions = useTransition(hovered, {
+const ScreenTab = ({ title, experienceName }) => {
+  const hoveredScreen = useAppStore(state => state.currentHoveredScreen);
+
+  const transitions = useTransition(hoveredScreen === experienceName, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
