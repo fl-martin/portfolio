@@ -1,10 +1,10 @@
 # Welcome to my portfolio!
 
-## Introduction👋
+👋## Introduction
 
 I'm [Federico L. Martin](https://www.linkedin.com/in/fl-martin/), a digital creator passionate about crafting captivating 3D experiences. This portfolio showcases my projects created with both Three.js and React Three Fiber.
 
-## Projects🖥️ (coming soon)
+🖥️## Projects (coming soon...)
 
 Here you can find a variety of experiences, including:
 
@@ -15,6 +15,6 @@ Here you can find a variety of experiences, including:
 
 Feel free to explore each project to see my dedication to innovation in web development.
 
-## Contact📧
+📧## Contact
 
 If you'd like to collaborate or have any questions, feel free to reach out to me at fl.martin.dev@gmail.com.
