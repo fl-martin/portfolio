@@ -14,11 +14,15 @@ const CameraHandler = () => {
   const setCurrentCameraPosition = useAppStore(state => state.setCurrentCameraPosition);
   const screensContainers = useAppStore(state => state.screensContainers);
   const setCreateDOControls = useAppStore(state => state.setCreateDOControls);
+
   const { camera, size, gl } = useThree(state => state);
+
   const [DOControls, setDOControls] = useState(null);
   const [initAnimCompleted, setInitAnimCompleted] = useState(false);
+
   const cameraControls = useRef();
   const screenRef = useRef(screen);
+
   // Ref a utilizar dentro de un event listener, para acceder al ultimo estado (https://medium.com/geographit/accessing-react-state-in-event-listeners-with-usestate-and-useref-hooks-8cceee73c559)
   const setScreenRef = screen => {
     screenRef.current = screen;
@@ -49,7 +53,7 @@ const CameraHandler = () => {
     } else if (screen === "menu") {
       setScreenRef(screen);
 
-      cameraControls.current.restThreshold = 0.5;
+      cameraControls.current.restThreshold = 0.9;
 
       cameraControls.current.smoothTime = 0.5;
 
@@ -93,11 +97,7 @@ const CameraHandler = () => {
   }, [screen, size, cameraPosition]);
 
   useEffect(() => {
-    if (!isMobile) cameraControls.current.disconnect();
-  }, []);
-
-  useEffect(() => {
-    // solo en dispositivos mobiles, via CameraModeSwitch
+    // cameraMode se actualiza solo en dispositivos mobiles, via CameraModeSwitch
     if (cameraMode === "deviceOrientation") {
       cameraControls.current.disconnect();
 
@@ -142,7 +142,23 @@ const CameraHandler = () => {
 
   return (
     <>
-      <CameraControls ref={cameraControls} smoothTime={0.25} restThreshold={0.5}></CameraControls>
+      <CameraControls
+        ref={cameraControls}
+        smoothTime={0.25}
+        restThreshold={0.5}
+        minZoom={0.5}
+        maxZoom={1.5}
+        touches={{
+          one: isMobile && screen !== "experience" ? 32 : 0,
+          two: isMobile && screen !== "experience" ? 1024 : 0,
+          three: isMobile && screen !== "experience" ? 64 : 0,
+        }}
+        mouseButtons={{
+          left: 0,
+          middle: 0,
+          right: 0,
+        }}
+      ></CameraControls>
       {cameraMode === "deviceOrientation" && cameraPosition === "menu" && screen === "menu" && <PointerLockCamera></PointerLockCamera>}
     </>
   );

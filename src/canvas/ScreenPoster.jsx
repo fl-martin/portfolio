@@ -3,7 +3,7 @@ import useAppStore from "../store";
 import { useTexture } from "@react-three/drei";
 import ZoomImageMaterial from "../custom/zoomImageMaterial/ZoomImageMaterial";
 
-const ScreenPoster = ({ textureURL, portalSize }) => {
+const ScreenPoster = ({ textureURL, portalSize, hovered }) => {
   const texture = useTexture(textureURL);
 
   const cameraPosition = useAppStore(state => state.currentCameraPosition);
@@ -15,8 +15,8 @@ const ScreenPoster = ({ textureURL, portalSize }) => {
       Material={ZoomImageMaterial}
       size={portalSize}
       texture={texture}
+      hovered={hovered}
       visible={cameraPosition !== "experience" || screen !== "experience"}
-      active={cameraPosition === "menu"}
     ></HovereablePlane>
   );
 };

@@ -1,7 +1,7 @@
-import { useSpring, animated } from "@react-spring/three";
-import { Environment } from "@react-three/drei";
-import { useThemeMode } from "flowbite-react";
 import { BackSide } from "three";
+import { Environment } from "@react-three/drei";
+import { useSpring, animated } from "@react-spring/three";
+import { useThemeMode } from "flowbite-react";
 
 const MainBackground = () => {
   const { computedMode } = useThemeMode();

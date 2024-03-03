@@ -13,8 +13,6 @@ const useAppStore = create((set, get) => ({
   setCurrentCameraPosition: position => set(state => ({ currentCameraPosition: position })),
   currentCameraMode: "rig",
   setCurrentCameraMode: mode => set(state => ({ currentCameraMode: mode })),
-  currentHoveredScreen: null,
-  setCurrentHoveredScreen: screen => set(state => ({ currentHoveredScreen: screen })),
   createDOControls: null,
   setCreateDOControls: func => set(state => ({ createDOControls: func })),
   isMobile:

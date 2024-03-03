@@ -1,6 +1,7 @@
-import useAppStore from "../store";
 import BottomNavbar from "./BottomNavbar";
+import LevaContainer from "./LevaContainer";
 import TopNavbar from "./TopNavbar";
+import useAppStore from "../store";
 
 const Overlay = () => {
   const screen = useAppStore(state => state.currentScreen);
@@ -9,7 +10,9 @@ const Overlay = () => {
     <>
       {screen !== "welcome" && (
         <>
-          <TopNavbar></TopNavbar> <BottomNavbar></BottomNavbar>
+          <TopNavbar></TopNavbar>
+          <BottomNavbar></BottomNavbar>
+          <LevaContainer />
         </>
       )}
     </>

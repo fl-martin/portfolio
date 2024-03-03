@@ -4,6 +4,7 @@ import { useSpring, animated, config } from "@react-spring/three";
 import { useMemo } from "react";
 
 const ZoomImageMaterial = ({ hovered, texture, aspectRatio }) => {
+  console.log("zoom");
   var HoverImageShader = {
     vertexShader: ` varying vec2 vUv;
     void main() {

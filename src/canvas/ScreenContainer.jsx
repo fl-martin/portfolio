@@ -1,14 +1,18 @@
+import Screen from "./Screen";
+import ScreenOutline from "./ScreenOutline";
+import ScreenPoster from "./ScreenPoster";
 import useAppStore from "../store";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import ScreenTab from "./ScreenTab";
 
-const ScreenContainer = ({ data, index, screensArrayLength, children, portalSize }) => {
+const ScreenContainer = ({ data, index, screensArrayLength, portalSize }) => {
   const setExperience = useAppStore(state => state.setExperience);
 
   const addScreenContainer = useAppStore(state => state.addScreenContainer);
 
   const cameraPosition = useAppStore(state => state.currentCameraPosition);
 
-  const setHoveredScreen = useAppStore(state => state.setCurrentHoveredScreen);
+  const [hovered, setHovered] = useState(false);
 
   const groupRef = useRef();
 
@@ -25,18 +29,27 @@ const ScreenContainer = ({ data, index, screensArrayLength, children, portalSize
       position={[1.4 + centerX + index * (portalSize.width + 1) + 1, data.position.y, data.position.z]}
       ref={groupRef}
       onClick={cameraPosition === "menu" ? () => setExperience(data.name) : null}
-      onPointerEnter={
+      onPointerOver={
         cameraPosition === "menu"
           ? () => {
-              setHoveredScreen(data.name);
+              setHovered(true);
             }
           : null
       }
-      onPointerLeave={() => {
-        setHoveredScreen(null);
+      onPointerOut={() => {
+        setHovered(false);
       }}
     >
-      {children}
+      <ScreenPoster textureURL={data.textureURL} experienceName={data.name} portalSize={portalSize} hovered={hovered}></ScreenPoster>
+      <ScreenOutline
+        data={data}
+        portalSize={portalSize}
+        experienceName={data.name}
+        cameraPosition={cameraPosition}
+        hovered={hovered}
+      ></ScreenOutline>
+      {cameraPosition === "menu" && <ScreenTab title={data.tagTitle} hovered={hovered} />}
+      {cameraPosition === "experience" && <Screen data={data} portalSize={portalSize} />}
     </group>
   );
 };

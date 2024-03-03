@@ -2,8 +2,6 @@ import { RenderTexture } from "@react-three/drei";
 import useAppStore from "../store";
 
 const Screen = ({ data, portalSize }) => {
-  const cameraPosition = useAppStore(state => state.currentCameraPosition);
-
   const experience = useAppStore(state => state.currentExperience);
 
   return (
