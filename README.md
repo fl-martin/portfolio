@@ -13,8 +13,6 @@ Here you can find a variety of experiences, including:
 - **Pointer Effects**
 - ...
 
-Feel free to explore each project to see my dedication to innovation in web development.
-
 ## 📧 Contact
 
 If you'd like to collaborate or have any questions, feel free to reach out to me at fl.martin.dev@gmail.com.
