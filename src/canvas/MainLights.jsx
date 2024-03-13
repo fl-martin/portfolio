@@ -1,13 +1,10 @@
 import { Object3D } from "three";
-import useAppStore from "../store";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
 import { useThemeMode } from "flowbite-react";
 
-const MainLights = () => {
-  const screen = useAppStore(state => state.currentScreen);
-
+const MainLights = React.memo(({ animDirectional }) => {
   const { computedMode } = useThemeMode();
 
   const pointer = useThree(state => state.pointer);
@@ -55,13 +52,13 @@ const MainLights = () => {
   }, [computedMode]);
 
   useEffect(() => {
-    if (screen !== "menu") {
+    if (animDirectional) {
       target.position.set(0, 0, -10);
     }
   }, [screen]);
 
   useFrame(() => {
-    if (computedMode === "dark" && screen === "menu") {
+    if (computedMode === "dark" && animDirectional) {
       target.position.set(pointer.x * 10, 0, -10);
     }
   });
@@ -79,6 +76,6 @@ const MainLights = () => {
       ></animated.directionalLight>
     </>
   );
-};
+});
 
 export default MainLights;

@@ -8,22 +8,22 @@ extend({ Water });
 function Ocean() {
   const ref = useRef();
   const gl = useThree(state => state.gl);
-  const waterNormals = useLoader(
-    THREE.TextureLoader,
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/waternormals.jpg"
+  const waterNormals = useMemo(
+    () => useLoader(THREE.TextureLoader, "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/waternormals.jpg"),
+    []
   );
 
   waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
   const geom = useMemo(() => new THREE.CircleGeometry(20, 80), []);
   const config = useMemo(
     () => ({
-      textureWidth: 1024,
-      textureHeight: 1024,
+      textureWidth: 750,
+      textureHeight: 750,
       waterNormals,
       sunDirection: new THREE.Vector3(0, 0, 10),
       sunColor: "orange",
       waterColor: 0x96d3ff,
-      distortionScale: 0.1,
+      distortionScale: 0.15,
       size: 0.5,
       fog: true,
       time: 1,

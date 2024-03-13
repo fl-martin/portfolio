@@ -83,8 +83,8 @@ const ReflectionsShadows = () => {
           <RandomizedLight intensity={0.6} amount={8} radius={4} ambient={0.5} position={[-7, 5, 5]} bias={0.001} />
         </AccumulativeShadows>
         <Clouds material={MeshBasicMaterial}>
-          <Cloud segments={35} bounds={[10, 2, 2]} fade={100} volume={3} color='orange' opacity={0.4} speed={0.25} />
-          <Cloud seed={5} segments={15} scale={2} volume={3} color='hotpink' fade={100} opacity={0.3} speed={0.3} />
+          <Cloud segments={35} bounds={[10, 2, 2]} fade={100} volume={3} color='orange' opacity={0.5} speed={0.25} />
+          <Cloud seed={5} segments={15} scale={2} volume={3} color='hotpink' fade={100} opacity={0.4} speed={0.3} />
         </Clouds>
       </group>
       <directionalLight position={[-7, 5, 5]} intensity={0.5}></directionalLight>
@@ -108,3 +108,5 @@ function Suzi(props) {
   });
   return <primitive object={scene} {...props} scale={2} />;
 }
+
+// Model by https://www.instagram.com/myname_eugene/

@@ -6,7 +6,7 @@ import plants3URL from "../assets/models/underwater_plant.glb";
 import React, { useMemo } from "react";
 import { useLoader } from "@react-three/fiber";
 
-const MainSceneElements = React.memo(() => {
+const MainSceneElements = React.memo(({ visible }) => {
   const ratioScale = Math.min(1, Math.max(0.8, window.innerWidth / 1920));
 
   const plants1 = useLoader(GLTFLoader, plants1URL);
@@ -44,7 +44,7 @@ const MainSceneElements = React.memo(() => {
 
   return (
     <>
-      <group position={[0, -6, -10]} scale={ratioScale} castShadow receiveShadow>
+      <group position={[0, -6, -10]} scale={ratioScale} castShadow receiveShadow visible={visible}>
         <primitive position={[4, 0, -6]} rotation={[0, -10, 0]} scale={15} object={plants1.scene} />
         <primitive position={[5, -2, 0]} rotation={[0, -180, 0]} scale={0.04} object={plants2.scene} />
         <primitive position={[8, -2, -5]} rotation={[0, -180, 0]} object={plants3.scene} />

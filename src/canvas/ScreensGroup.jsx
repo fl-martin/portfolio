@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useThree } from "@react-three/fiber";
 
 const ScreensGroup = () => {
-  const ratioScale = Math.min(1, Math.max(0.8, window.innerWidth / 1920));
+  const ratioScale = Math.min(1, Math.max(0.9, window.innerWidth / 1920));
 
   const size = useThree(state => state.size);
 

@@ -17,7 +17,7 @@ const WelcomeScreen = () => {
               <div className='text-center md:text-left font-thin text-4xl md:text-6xl text-neutral-200 transition-all '>
                 <span style={{ whiteSpace: "nowrap" }}>FEDERICO L.</span> MARTIN
               </div>
-              <div className='text-center my-4 md:m-0 md:ml-5 md:mb-2 md:text-justify font-light text-neutral-200 transition-all '>
+              <div className='text-center my-4 md:m-0 md:ml-5 md:mb-3 md:text-justify font-light text-neutral-200 transition-all '>
                 Welcome to my portfolio! As a digital creator, I'm passionate about crafting captivating 3D experiences for the web. You'll
                 discover a range of projects here, from stunning visualizations to interactive environments.
               </div>

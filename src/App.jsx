@@ -2,13 +2,12 @@ import CameraHandler from "./canvas/CameraHandler";
 import { Canvas } from "@react-three/fiber";
 import ContactScreen from "./canvas/ContactScreen";
 import LoadingScreen from "./dom/LoadingScreen";
-import MainLights from "./canvas/MainLights";
 import MainScene from "./canvas/MainScene";
 import Overlay from "./dom/Overlay";
 import PostEffects from "./canvas/PostEffects";
+import { Preload, Stats } from "@react-three/drei";
 import React, { Suspense } from "react";
 import ScreensGroup from "./canvas/ScreensGroup";
-import { Preload, Stats } from "@react-three/drei";
 import WelcomeScreen from "./canvas/WelcomeScreen";
 
 const App = () => {
@@ -19,13 +18,11 @@ const App = () => {
           <CameraHandler></CameraHandler>
           <WelcomeScreen></WelcomeScreen>
           <ContactScreen></ContactScreen>
-          <MainScene>
-            <MainLights></MainLights>
-          </MainScene>
+          <MainScene />
           <ScreensGroup />
           <PostEffects />
-          <Stats></Stats>
           <Preload all></Preload>
+          <Stats />
         </Canvas>
       </Suspense>
       <Overlay />

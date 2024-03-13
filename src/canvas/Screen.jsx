@@ -6,7 +6,7 @@ const Screen = ({ data, portalSize }) => {
 
   return (
     <>
-      {cameraPosition === "experience" && experience === data.name && (
+      {experience === data.name && (
         <mesh position={[0, 0, 0.1]}>
           <planeGeometry args={[portalSize.width, portalSize.height]} />
           <meshBasicMaterial>
