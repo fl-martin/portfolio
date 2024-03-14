@@ -1,14 +1,18 @@
 import { MeshReflectorMaterial } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
-import { MeshStandardMaterial } from "three";
+import { useRef } from "react";
+import { MeshStandardMaterial, Vector3 } from "three";
+import Cursor from "./Cursor";
 const ratioScale = Math.min(2, Math.max(0.1, window.innerWidth / 1920));
 
 const PhysicFloor = ({ reflector, position }) => {
+  const cursorPos = useRef(new Vector3());
+
   return (
     <>
       <RigidBody type='kinematicPosition' position={position}>
-        <mesh rotation={[-Math.PI / 2, 0, 0]} scale={ratioScale} receiveShadow>
-          <circleGeometry args={[30, 20]} />
+        <mesh rotation={[-Math.PI / 2, 0, 0]} scale={ratioScale} receiveShadow onPointerMove={e => cursorPos.current.copy(e.point)}>
+          <circleGeometry args={[90, 20]} />
           {reflector ? (
             <MeshReflectorMaterial
               blur={[300, 100]}
@@ -27,6 +31,7 @@ const PhysicFloor = ({ reflector, position }) => {
           )}
         </mesh>
       </RigidBody>
+      <Cursor position={cursorPos} />
     </>
   );
 };

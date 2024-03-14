@@ -28,7 +28,7 @@ const RapierDemo = () => {
         <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2.1} />
         <ambientLight />
         <directionalLight castShadow position={[0, 20, 5]} intensity={1} shadow-mapSize={1024}></directionalLight>
-        <PhysicFloor reflector={true} position={[0, -2, 0]} />
+        <PhysicFloor reflector={false} position={[0, -2, 0]} />
         <PhysicsElements></PhysicsElements>
       </Physics>
     </Suspense>
