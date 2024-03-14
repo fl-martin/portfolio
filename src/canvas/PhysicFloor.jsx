@@ -10,9 +10,9 @@ const PhysicFloor = ({ reflector, position }) => {
 
   return (
     <>
-      <RigidBody type='kinematicPosition' position={position}>
+      <RigidBody type='kinematicPosition' colliders='hull' position={position}>
         <mesh rotation={[-Math.PI / 2, 0, 0]} scale={ratioScale} receiveShadow onPointerMove={e => cursorPos.current.copy(e.point)}>
-          <circleGeometry args={[90, 20]} />
+          <circleGeometry args={[50, 20]} />
           {reflector ? (
             <MeshReflectorMaterial
               blur={[300, 100]}
