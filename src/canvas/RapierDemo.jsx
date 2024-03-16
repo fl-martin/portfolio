@@ -28,18 +28,19 @@ const RapierDemo = () => {
         <PerspectiveCamera makeDefault position={[0, 0, 5]} near={0.5} />
         <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2.1} />
         <ambientLight intensity={0.7} />
+
         <directionalLight
           castShadow
-          position={[0, 20, 5]}
-          intensity={1}
+          position={[-5, 5, -5]}
+          intensity={0.7}
           ref={dirL}
-          shadow-camera-left={-25}
-          shadow-camera-right={25}
-          shadow-camera-top={25}
-          shadow-camera-bottom={-25}
+          shadow-camera-left={-10}
+          shadow-camera-right={10}
+          shadow-camera-top={10}
+          shadow-camera-bottom={-10}
           shadow-mapSize={new Vector2(1024, 1024)}
         ></directionalLight>
-        <PhysicFloor reflector={false} position={[0, -2, 0]} />
+        <PhysicFloor position={[0, -2, 0]} />
         <PhysicsElements></PhysicsElements>
       </Physics>
       <Environment preset='forest'></Environment>

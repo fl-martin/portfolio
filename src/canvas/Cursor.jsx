@@ -10,10 +10,12 @@ const Cursor = ({ position }) => {
 
   const [attractorStrength, setAttractorStrength] = useState(0);
 
-  window.addEventListener("pointerdown", () => setPointerDown(true));
-  window.addEventListener("pointerup", () => {
-    setPointerDown(false);
-  });
+  useEffect(() => {
+    window.addEventListener("pointerdown", () => setPointerDown(true));
+    window.addEventListener("pointerup", () => {
+      setPointerDown(false);
+    });
+  }, []);
 
   useEffect(() => {
     if (!pointerDown) setAttractorStrength(0);

@@ -1,14 +1,11 @@
 import { useMemo, useRef, useState } from "react";
 import { BufferAttribute } from "three";
-import { useControls } from "leva";
-
-import { DoubleSide } from "three";
 import { useEffect } from "react";
 import { createNoise2D } from "../custom/helpers/CreateNoise2D";
 
-const generateTerrain = (simplex, size, height, levels, scale, offset) => {
+const generateTerrain = (simplex, size, height, levels, scale) => {
   const noise = (level, x, z) =>
-    simplex(offset.x * scale + level * x * scale, offset.z * scale + level * z * scale) / level + (level > 1 ? noise(level / 2, x, z) : 0);
+    simplex(scale + level * x * scale, scale + level * z * scale) / level + (level > 1 ? noise(level / 2, x, z) : 0);
   let lowest = 0;
   return [
     Float32Array.from({ length: size ** 2 * 3 }, (_, i) => {
@@ -16,7 +13,7 @@ const generateTerrain = (simplex, size, height, levels, scale, offset) => {
       switch (i % 3) {
         case 0:
           v = i / 3;
-          return (offset.x + ((v % size) / size - 0.5)) * scale;
+          return ((v % size) / size - 0.5) * scale;
         case 1:
           v = (i - 1) / 3;
           const y = noise(2 ** levels, (v % size) / size - 0.5, Math.floor(v / size) / size - 0.5) * height;
@@ -24,7 +21,7 @@ const generateTerrain = (simplex, size, height, levels, scale, offset) => {
           return y;
         case 2:
           v = (i - 2) / 3;
-          return (offset.z + Math.floor(v / size) / size - 0.5) * scale;
+          return (Math.floor(v / size) / size - 0.5) * scale;
         default:
           console.error("Can't happen");
           return 0;
@@ -34,17 +31,17 @@ const generateTerrain = (simplex, size, height, levels, scale, offset) => {
   ];
 };
 
-const Terrain = ({ seed, size, height, levels = 8, scale = 1, offset }) => {
+const Terrain = ({ seed, size, height, levels = 8, scale = 1 }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const simplex = useMemo(() => new createNoise2D(), [seed]); // use seed to regenerate simplex noise
-  const [lowestPoint, setLowestPoint] = useState(0);
+  //const [lowestPoint, setLowestPoint] = useState(0);
   const ref = useRef();
   // const northRef = useRef();
   // const eastRef = useRef();
   // const southRef = useRef();
   // const westRef = useRef();
 
-  const sides = useMemo(
+  /*const sides = useMemo(
     () => ({
       north: new Float32Array(size * 6),
       east: new Float32Array(size * 6),
@@ -52,11 +49,11 @@ const Terrain = ({ seed, size, height, levels = 8, scale = 1, offset }) => {
       west: new Float32Array(size * 6),
     }),
     [size]
-  );
+  );*/
 
   useEffect(() => {
-    const [vertices, lowestPoint] = generateTerrain(simplex, size, height, levels, scale, offset);
-    setLowestPoint(lowestPoint);
+    const [vertices, lowestPoint] = generateTerrain(simplex, size, height, levels, scale);
+    /* setLowestPoint(lowestPoint);
     for (let i = 0, j = 0, k = 0, l = 0; i < size ** 2; i++) {
       const [x, y, z] = [vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]];
       if (i <= size) {
@@ -94,7 +91,7 @@ const Terrain = ({ seed, size, height, levels = 8, scale = 1, offset }) => {
         sides.west[l * 6 + 5] = z;
         l++;
       }
-    }
+    }*/
     ref.current.setAttribute("position", new BufferAttribute(vertices, 3));
     ref.current.elementsNeedUpdate = true;
     ref.current.computeVertexNormals();
@@ -106,9 +103,7 @@ const Terrain = ({ seed, size, height, levels = 8, scale = 1, offset }) => {
     southRef.current.elementsNeedUpdate = true;
     westRef.current.setAttribute("position", new BufferAttribute(sides.west, 3));
     westRef.current.elementsNeedUpdate = true;*/
-  }, [size, height, levels, scale, offset, simplex, sides]);
-
-  const { wireframe } = useControls({ wireframe: false });
+  }, [size, height, levels, scale, simplex]);
 
   return <planeGeometry args={[1, 1, size - 1, size - 1]} ref={ref} />;
 };

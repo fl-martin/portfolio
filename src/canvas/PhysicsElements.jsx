@@ -1,11 +1,8 @@
-import SelectionBoxes from "./SelectionBoxes";
-import { boxesData } from "../data/boxesData";
 import { button, useControls } from "leva";
 import { memo, useEffect, useRef, useState } from "react";
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { Box, Sphere } from "@react-three/drei";
 import { Vector3 } from "three";
-import { Attractor } from "@react-three/rapier-addons";
 
 const Thing = ({ item }) => {
   const Thang = itemMap[item];
@@ -35,7 +32,7 @@ const RigidBox = memo(() => {
     <RigidBody colliders='cuboid' ref={box} position={[-4 + Math.random() * 8, 10, 0]}>
       <group scale={1}>
         <Box scale={0.5} receiveShadow castShadow>
-          <meshPhysicalMaterial color={color} roughness={0.3} metalness={0.7} />
+          <meshPhysicalMaterial color={color} roughness={0.25} metalness={0.5} />
         </Box>
       </group>
     </RigidBody>
@@ -49,7 +46,7 @@ const RigidCylinder = memo(() => {
     <RigidBody colliders={false} position={[-4 + Math.random() * 8, 10, 0]}>
       <mesh castShadow receiveShadow scale={1}>
         <cylinderGeometry args={[0.4, 0.4, 0.4, 16]} />
-        <meshPhysicalMaterial color={color} roughness={0.3} metalness={0.7} />
+        <meshPhysicalMaterial color={color} roughness={0.25} metalness={0.5} />
       </mesh>
       <CylinderCollider args={[0.2, 0.4]} />
     </RigidBody>
@@ -62,7 +59,7 @@ const RigidBall = memo(() => {
   return (
     <RigidBody colliders='ball' position={new Vector3(-4 + Math.random() * 8, 10, 0)} scale={1}>
       <Sphere scale={0.2} castShadow receiveShadow>
-        <meshPhysicalMaterial color={color} roughness={0.3} metalness={0.7} />
+        <meshPhysicalMaterial color={color} roughness={0.25} metalness={0.5} />
       </Sphere>
     </RigidBody>
   );
@@ -86,8 +83,6 @@ const PhysicsElements = () => {
     cylinder: button(() => addItem("Cylinder")),
     ball: button(() => addItem("Ball")),
   });
-
-  //useControls({""})
 
   return (
     <group scale={1}>
