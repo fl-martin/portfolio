@@ -3,6 +3,7 @@ import { RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import { MeshStandardMaterial, Vector3 } from "three";
 import Cursor from "./Cursor";
+import TerrainManager from "./TerrainManager";
 const ratioScale = Math.min(2, Math.max(0.1, window.innerWidth / 1920));
 
 const PhysicFloor = ({ reflector, position }) => {
@@ -10,9 +11,9 @@ const PhysicFloor = ({ reflector, position }) => {
 
   return (
     <>
-      <RigidBody type='kinematicPosition' colliders='hull' position={position}>
-        <mesh rotation={[-Math.PI / 2, 0, 0]} scale={ratioScale} receiveShadow onPointerMove={e => cursorPos.current.copy(e.point)}>
-          <circleGeometry args={[50, 20]} />
+      <RigidBody type='kinematicPosition' colliders='trimesh' position={position}>
+        <mesh scale={ratioScale} receiveShadow onPointerMove={e => cursorPos.current.copy(e.point)}>
+          <TerrainManager />
           {reflector ? (
             <MeshReflectorMaterial
               blur={[300, 100]}
@@ -27,7 +28,7 @@ const PhysicFloor = ({ reflector, position }) => {
               roughness={0}
             />
           ) : (
-            <shadowMaterial color={"black"} opacity={0.7} />
+            <meshStandardMaterial color={"red"} opacity={0.7} roughness={0.2} metalness={0.8} />
           )}
         </mesh>
       </RigidBody>

@@ -49,3 +49,4 @@ export default App;
 // solucion a fla viewport. cual es la relacion entre viewport y posicion de camara? para calcular exacto. uso de bounds?
 // usar textura de rendertexture como input de shader?
 // post processing solo en rendertarget https://codesandbox.io/s/drei-rendertexture-forked-bovekp?file=/src/App.js
+// agregar a hover efects https://www.youtube.com/watch?v=6YJ-2MvDqhc&t=503s&ab_channel=ChetanVerma
