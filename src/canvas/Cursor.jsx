@@ -27,7 +27,7 @@ const Cursor = ({ position }) => {
   useFrame(() => {
     ref.current?.setNextKinematicTranslation({
       x: lerp(ref.current.translation().x, position.current.x, 0.1),
-      y: -1.5,
+      y: lerp(ref.current.translation().y, position.current.y + 0.6, 0.1),
       z: lerp(ref.current.translation().z, position.current.z, 0.1),
     });
 
