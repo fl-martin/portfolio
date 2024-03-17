@@ -9,7 +9,7 @@ const Thing = ({ item }) => {
   return <Thang />;
 };
 
-const colors = ["red", "green", "blue", "yellow", "orange", "purple"];
+const colors = [0x007bff, 0x00c851, 0xffbb33, 0xff2d55, 0x9c27b0, 0xff6d00];
 const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
 const useRandomColor = () => {
   const color = randomColor();
@@ -32,7 +32,7 @@ const RigidBox = memo(() => {
     <RigidBody colliders='cuboid' ref={box} position={[-4 + Math.random() * 8, 10, 0]}>
       <group scale={1}>
         <Box scale={0.5} receiveShadow castShadow>
-          <meshPhysicalMaterial color={color} roughness={0.25} metalness={0.5} />
+          <meshPhysicalMaterial color={color} roughness={0.75} metalness={0.5} flatShading />
         </Box>
       </group>
     </RigidBody>
@@ -46,7 +46,7 @@ const RigidCylinder = memo(() => {
     <RigidBody colliders={false} position={[-4 + Math.random() * 8, 10, 0]}>
       <mesh castShadow receiveShadow scale={1}>
         <cylinderGeometry args={[0.4, 0.4, 0.4, 16]} />
-        <meshPhysicalMaterial color={color} roughness={0.25} metalness={0.5} />
+        <meshPhysicalMaterial color={color} roughness={0.75} metalness={0.5} flatShading />
       </mesh>
       <CylinderCollider args={[0.2, 0.4]} />
     </RigidBody>
@@ -59,7 +59,7 @@ const RigidBall = memo(() => {
   return (
     <RigidBody colliders='ball' position={new Vector3(-4 + Math.random() * 8, 10, 0)} scale={1}>
       <Sphere scale={0.2} castShadow receiveShadow>
-        <meshPhysicalMaterial color={color} roughness={0.25} metalness={0.5} />
+        <meshPhysicalMaterial color={color} roughness={0.75} metalness={0.5} flatShading />
       </Sphere>
     </RigidBody>
   );

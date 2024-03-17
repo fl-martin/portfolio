@@ -12,7 +12,7 @@ const RapierDemo = () => {
   const scene = useThree(state => state.scene);
 
   useEffect(() => {
-    scene.background = new Color("white");
+    scene.background = new Color(0x00aae4);
   }, []);
 
   const controls = useControls({
@@ -27,7 +27,7 @@ const RapierDemo = () => {
       <Physics gravity={[0, controls.Gravity, 0]} debug={controls["Show colliders"]}>
         <PerspectiveCamera makeDefault position={[0, 0, 5]} near={0.5} />
         <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2.1} />
-        <ambientLight intensity={0.7} />
+        <ambientLight intensity={0.5} />
 
         <directionalLight
           castShadow
@@ -43,7 +43,7 @@ const RapierDemo = () => {
         <PhysicFloor position={[0, -2, 0]} />
         <PhysicsElements></PhysicsElements>
       </Physics>
-      <Environment preset='forest'></Environment>
+      <Environment preset='apartment'></Environment>
     </Suspense>
   );
 };
