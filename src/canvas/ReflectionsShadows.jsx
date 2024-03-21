@@ -13,6 +13,7 @@ import {
 } from "@react-three/drei";
 import { useLayoutEffect } from "react";
 import { MeshBasicMaterial } from "three";
+import envMapHDRI from "../assets/hdri/Contrast-Black-Jewelry-HDRI-Vol2.hdr";
 
 const ReflectionsShadows = () => {
   const ratioScale = Math.min(2, Math.max(0.1, window.innerWidth / 1920));
@@ -79,7 +80,7 @@ const ReflectionsShadows = () => {
             />
           </mesh>
         </Center>
-        <AccumulativeShadows temporal frames={100} color='black' colorBlend={3} toneMapped={true} alphaTest={1.3} opacity={1} scale={12}>
+        <AccumulativeShadows temporal frames={50} color='black' colorBlend={3} toneMapped={true} alphaTest={1.3} opacity={1} scale={12}>
           <RandomizedLight intensity={0.6} amount={8} radius={4} ambient={0.5} position={[-7, 5, 5]} bias={0.001} />
         </AccumulativeShadows>
         <Clouds material={MeshBasicMaterial}>
@@ -89,7 +90,7 @@ const ReflectionsShadows = () => {
       </group>
       <directionalLight position={[-7, 5, 5]} intensity={0.5}></directionalLight>
       <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2} />
-      <Environment files={"./assets/hdri/Contrast-Black-Jewelry-HDRI-Vol2.hdr"}></Environment>
+      <Environment files={envMapHDRI}></Environment>
     </>
   );
 };

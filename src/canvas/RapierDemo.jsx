@@ -3,13 +3,15 @@ import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei
 import { useThree } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { useControls } from "leva";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import PhysicFloor from "./PhysicFloor";
-import { Color, Vector2 } from "three";
+import { Color, Vector2, Vector3 } from "three";
+import AttractorRepeller from "./AttractorRepeller";
 
 const RapierDemo = () => {
   const dirL = useRef();
   const scene = useThree(state => state.scene);
+  const cursorPos = useRef(new Vector3());
 
   useEffect(() => {
     scene.background = new Color(0x00aae4);
@@ -31,8 +33,8 @@ const RapierDemo = () => {
 
         <directionalLight
           castShadow
-          position={[-5, 5, -5]}
-          intensity={0.7}
+          position={[-5, 6, -5]}
+          intensity={0.9}
           ref={dirL}
           shadow-camera-left={-10}
           shadow-camera-right={10}
@@ -40,8 +42,11 @@ const RapierDemo = () => {
           shadow-camera-bottom={-10}
           shadow-mapSize={new Vector2(1024, 1024)}
         ></directionalLight>
-        <PhysicFloor position={[0, -2, 0]} />
-        <PhysicsElements></PhysicsElements>
+
+        <PhysicsElements cursorPos={cursorPos}>
+          <PhysicFloor position={[0, -2, 0]} />
+        </PhysicsElements>
+        <AttractorRepeller />
       </Physics>
       <Environment preset='apartment'></Environment>
     </Suspense>

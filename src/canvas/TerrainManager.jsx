@@ -7,7 +7,7 @@ const TerrainManager = ({ seed, setSeed }) => {
   const randomNumber = (min, max) => Math.floor(Math.random() * Math.max(max - min + 1, 0)) + min;
 
   const [resolution, setResolution] = useState(randomNumber(10, 11));
-  const [height, setHeight] = useState(randomNumber(0.2, 2.5));
+  const [height, setHeight] = useState(randomNumber(0.2, 1.5));
 
   const controls = useControls("Ground", {
     "Regenerate ground": button(() => {

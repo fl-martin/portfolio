@@ -1,56 +1,73 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
-import { Attractor } from "@react-three/rapier-addons";
-import { useControls } from "leva";
-import { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
+import { Vector3 } from "three";
 import { lerp } from "three/src/math/MathUtils";
 
-const Cursor = ({ position }) => {
-  const [pointerDown, setPointerDown] = useState(false);
-
-  const [attractorStrength, setAttractorStrength] = useState(0);
-
-  useEffect(() => {
-    window.addEventListener("pointerdown", () => setPointerDown(true));
-    window.addEventListener("pointerup", () => {
-      setPointerDown(false);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!pointerDown) setAttractorStrength(0);
-  }, [pointerDown]);
-
+const Cursor = React.memo(({ position }) => {
+  console.log("cursor");
   const ref = useRef();
+  const refMat = useRef();
 
-  //use usecontext?
-  useFrame(() => {
-    ref.current?.setNextKinematicTranslation({
-      x: lerp(ref.current.translation().x, position.current.x, 0.1),
-      y: lerp(ref.current.translation().y, position.current.y + 0.6, 0.1),
-      z: lerp(ref.current.translation().z, position.current.z, 0.1),
-    });
+  const uniforms = {
+    color: { value: new Vector3(0.2, 0.0, 0.0) },
+    time: { value: 0.0 },
+  };
 
-    if (pointerDown) {
-      setAttractorStrength(state => lerp(state, 1, 0.001));
-    }
-  });
-
-  const controls = useControls("3D Cursor", {
-    "On click": {
-      options: { Attractor: null, Repeller: "-", None: null },
-    },
+  useFrame(state => {
+    refMat.current.uniforms.time.value = state.clock.elapsedTime;
+    ref.current.position.x = lerp(ref.current.position.x, position.current.x, 0.1);
+    ref.current.position.y = lerp(ref.current.position.y, position.current.y + 1, 0.1);
+    ref.current.position.z = lerp(ref.current.position.z, position.current.z, 0.1);
   });
 
   return (
-    <RigidBody type={"kinematicPosition"} colliders={"hull"} ref={ref} mass={0.001}>
-      <Attractor range={5} strength={`${controls["On click"] + attractorStrength}`} />
-      <mesh rotation-z={Math.PI} castShadow>
-        <sphereGeometry args={[0.2, 20]} />
-        <meshStandardMaterial color={"black"} roughness={0} metalness={0.3} />
-      </mesh>
-    </RigidBody>
+    <mesh rotation-x={-Math.PI * 0.5} ref={ref}>
+      <circleGeometry args={[0.5, 20]} />
+      <shaderMaterial
+        transparent
+        uniforms={uniforms}
+        ref={refMat}
+        vertexShader={`
+varying vec2 vUv;
+
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}
+`}
+        fragmentShader={`
+  varying vec2 vUv;
+  uniform vec3 color;
+  uniform float time; // A-Frame time in milliseconds.
+  
+  void main() {
+      // Calcula un valor de tiempo en segundos
+      float timeA = time / 1.0;
+  
+      // Crea una animación con el tiempo
+      float animationSpeed = 1.0;
+      float animationOffset = timeA * animationSpeed;
+  
+      // Calcula la distancia al centro normalizada
+      float distToCenter = length(vUv - 0.5);
+  
+      // Aplica una función de onda sinusoidal para curvas suaves
+      float curve = 0.5 + 1.0 * sin(animationOffset + distToCenter * 30.0) * cos(timeA);
+  
+      // Agrega transparencia basada en la distancia al centro
+      float transparency = smoothstep(0.1, 0.5, distToCenter);
+  
+      // Combina el color uniforme con el gradiente curvado y la transparencia
+      vec3 finalColor = mix(color, vec3(0.3, 0.5, 0.9), curve);
+  
+      // Establece el color del fragmento con transparencia
+      gl_FragColor = vec4(finalColor, transparency);
+  }
+  `}
+      />
+    </mesh>
   );
-};
+});
 
 export default Cursor;
