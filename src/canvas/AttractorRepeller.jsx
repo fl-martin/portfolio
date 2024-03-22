@@ -5,6 +5,8 @@ import { useControls } from "leva";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Color } from "three";
 import { lerp } from "three/src/math/MathUtils";
+import ScreenTab from "./ScreenTab";
+import { Html } from "@react-three/drei";
 
 const AttractorRepeller = () => {
   console.log("attr");
@@ -22,7 +24,7 @@ const AttractorRepeller = () => {
 
   const matRef = useRef();
 
-  const colorFrom = useMemo(() => new Color("#b04c4c"), []);
+  const colorFrom = useMemo(() => new Color("#ffff00"), []);
 
   const colorTo = useMemo(() => new Color("#ff96dc"), []);
 
@@ -36,8 +38,8 @@ const AttractorRepeller = () => {
 
   useFrame(() => {
     if (active) {
-      setAttractorStrength(state => lerp(state, 1, 0.001));
-      matRef.current.color.lerp(controls["Mode"] === "+" ? colorBlue : colorRed, 0.1);
+      setAttractorStrength(state => lerp(state, controls["Mode"] === "+" ? 0.6 : 1.5, 0.001));
+      matRef.current.color.lerp(controls["Mode"] === "+" ? colorBlue : colorRed, 0.01);
     } else if (!active) {
       matRef.current.color.lerp(hovered ? colorTo : colorFrom, 0.1);
     }
@@ -45,6 +47,9 @@ const AttractorRepeller = () => {
 
   return (
     <>
+      <Html center position={[0, 2.6, 0]}>
+        <div className={"text-center text-gray-600 font-sm w-fit whitespace-nowrap"}>Click & hold</div>
+      </Html>
       <Attractor range={10} strength={`${controls["Mode"] === null ? 0 : controls["Mode"]}${attractorStrength}`} position={[0, 2, 0]} />
       <RigidBody type={"kinematicPosition"} colliders={"hull"} position={[0, 2, 0]}>
         <mesh

@@ -76,15 +76,13 @@ const itemMap = {
 const PhysicsElements = ({ cursorPos, children }) => {
   const [items, setItems] = useState([]);
 
-  console.log("phyelem");
-
   const addItem = str => {
     setItems(curr => [...curr, str]);
   };
 
-  const controls = useControls("Create element", {
-    Mode: {
-      options: { Box: "Box", Cylinder: "Cylinder", Ball: "Ball" },
+  const controls = useControls({
+    "Create element": {
+      options: { Box: "Box", Cylinder: "Cylinder", Ball: "Ball", None: null },
     },
   });
 
@@ -100,7 +98,8 @@ const PhysicsElements = ({ cursorPos, children }) => {
         onClick={e => {
           e.stopPropagation();
           e.target.setPointerCapture(e.pointerId);
-          addItem({ type: controls.Mode, position: [cursorPos.current.x, cursorPos.current.y + 0.7, cursorPos.current.z] });
+          if (!controls["Create element"]) return;
+          addItem({ type: controls["Create element"], position: [cursorPos.current.x, cursorPos.current.y + 0.7, cursorPos.current.z] });
         }}
       >
         {items.map((item, i) => (
@@ -109,7 +108,7 @@ const PhysicsElements = ({ cursorPos, children }) => {
         {children}
       </group>
 
-      <Cursor position={cursorPos} />
+      <Cursor position={cursorPos} visible={controls["Create element"] !== null} />
     </>
   );
 };

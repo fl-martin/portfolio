@@ -54,7 +54,7 @@ const PhysicFloor = ({ position, addItem }) => {
               float normalizedY = (uv.y + 2.0) / 40.0;
               
               // Visualizar el valor normalizado de la coordenada y
-              csm_DiffuseColor = vec4(uv.y * 0.4 + 1.0, 0.5, -uv.y * 0.2 + 1.0, 1.0);
+              csm_DiffuseColor = vec4(uv.y * 0.4 + 0.6, 0.5, -uv.y * 0.11 + 1.0, 1.0);
             }`}
           />
         </mesh>

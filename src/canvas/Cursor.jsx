@@ -1,12 +1,13 @@
+import { Html } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import React, { useRef } from "react";
 import { Vector3 } from "three";
 import { lerp } from "three/src/math/MathUtils";
 
-const Cursor = React.memo(({ position }) => {
-  console.log("cursor");
+const Cursor = React.memo(({ position, visible = true }) => {
   const ref = useRef();
+  const curRef = useRef();
   const refMat = useRef();
 
   const uniforms = {
@@ -22,13 +23,21 @@ const Cursor = React.memo(({ position }) => {
   });
 
   return (
-    <mesh rotation-x={-Math.PI * 0.5} ref={ref}>
-      <circleGeometry args={[0.5, 20]} />
-      <shaderMaterial
-        transparent
-        uniforms={uniforms}
-        ref={refMat}
-        vertexShader={`
+    <group ref={ref} visible={visible}>
+      <Html center distanceFactor={10} position={[0, 0.5, 0]} occlude>
+        <div className={"text-center text-gray-600 font-sm w-fit whitespace-nowrap"} style={{ visibility: visible ? "visible" : "hidden" }}>
+          Click to
+          <br />
+          create element
+        </div>
+      </Html>
+      <mesh rotation-x={-Math.PI * 0.5} castShadow ref={curRef}>
+        <circleGeometry args={[0.5, 20]} />
+        <shaderMaterial
+          transparent
+          uniforms={uniforms}
+          ref={refMat}
+          vertexShader={`
 varying vec2 vUv;
 
 void main() {
@@ -36,7 +45,7 @@ void main() {
   gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 }
 `}
-        fragmentShader={`
+          fragmentShader={`
   varying vec2 vUv;
   uniform vec3 color;
   uniform float time; // A-Frame time in milliseconds.
@@ -65,8 +74,9 @@ void main() {
       gl_FragColor = vec4(finalColor, transparency);
   }
   `}
-      />
-    </mesh>
+        />
+      </mesh>
+    </group>
   );
 });
 
